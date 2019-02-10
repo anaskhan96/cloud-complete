@@ -1,0 +1,45 @@
+title: "Tests for adding, listing, and deleting categories"
+---
+case_title: List categories
+route: /api/v1/categories
+method: GET
+request: '{}'
+code: 204
+response: '{}'
+---
+case_title: Add category 'abc'
+route: /api/v1/categories
+method: POST
+request: '[ "abc" ]'
+code: 201
+response: '{}'
+invalid_methods: '[ "DELETE" ]'
+---
+case_title: Add category 'abc'
+route: /api/v1/categories
+method: POST
+request: '[ "abc" ]'
+code: 400
+response: '{}'
+---
+case_title: List categories
+route: /api/v1/categories
+method: GET
+request: '{}'
+code: 200
+response: '{ "abc": 0 }'
+skip_invalid_methods_test: 'True'
+---
+case_title: Delete category 'abc'
+route: /api/v1/categories/abc
+method: DELETE
+request: '{}'
+code: 200
+response: '{}'
+---
+case_title: Delete category 'abc'
+route: /api/v1/categories/abc
+method: DELETE
+request: '{}'
+code: 400
+response: '{}'

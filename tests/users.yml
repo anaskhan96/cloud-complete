@@ -1,0 +1,45 @@
+title: "Tests for adding and deleting users"
+---
+case_title: Add user 'xyz'
+route: /api/v1/users
+method: POST
+request: '{
+	"username": "xyz",
+	"password": "3d725109c7e7c0bfb9d709836735b56d943d263f"
+}'
+code: 201
+response: '{}'
+---
+case_title: Add user 'xyz'
+route: /api/v1/users
+method: POST
+request: '{
+	"username": "xyz",
+	"password": "3d725109c7e7c0bfb9d709836735b56d943d263f"
+}'
+code: 400
+response: '{}'
+---
+case_title: Add user 'abc' with invalid password
+route: /api/v1/users
+method: POST
+request: '{
+	"username": "abc",
+	"password": "zyx3d725109c7e7c0bfb9d7098367"
+}'
+code: 400
+response: '{}'
+---
+case_title: Delete user 'xyz'
+route: /api/v1/users/xyz
+method: DELETE
+request: '{}'
+code: 200
+response: '{}'
+---
+case_title: Delete user 'xyz'
+route: /api/v1/users/xyz
+method: DELETE
+request: '{}'
+code: 400
+response: '{}'

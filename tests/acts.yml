@@ -1,0 +1,228 @@
+title: "Tests for adding, listing, upvoting, and deleting acts ( <= 100 )"
+---
+case_title: Add user 'xyz'
+route: /api/v1/users
+method: POST
+request: '{
+	"username": "xyz",
+	"password": "3d725109c7e7c0bfb9d709836735b56d943d263f"
+}'
+code: 201
+response: '{}'
+skip_invalid_methods_test: 'True' 
+---
+case_title: Add category 'abc'
+route: /api/v1/categories
+method: POST
+request: '[ "abc" ]'
+code: 201
+response: '{}'
+skip_invalid_methods_test: 'True'
+---
+case_title: List acts for 'abc'
+route: /api/v1/categories/abc/acts
+method: GET
+request: '{}'
+code: 204
+response: '[]'
+---
+case_title: Upload act
+route: /api/v1/acts
+method: POST
+request: '{
+  "actId": 1234,
+	"username": "xyz",
+	"timestamp": "10-10-2019:45-23-03",
+	"caption": "#helloworld",
+	"categoryName": "abc",
+	"imgB64": "bWF5byBvciBtdXN0Pw=="
+}'
+code: 201
+response: '{}'
+---
+case_title: Upload act with duplicate actId
+route: /api/v1/acts
+method: POST
+request: '{
+  "actId": 1234,
+	"username": "xyz",
+	"timestamp": "10-10-2019:45-23-03",
+	"caption": "#helloworld",
+	"categoryName": "abc",
+	"imgB64": "bWF5byBvciBtdXN0Pw=="
+}'
+code: 400
+response: '{}'
+---
+case_title: Upload act with invalid user
+route: /api/v1/acts
+method: POST
+request: '{
+  "actId": 23,
+	"username": "x",
+	"timestamp": "10-10-2019:45-23-03",
+	"caption": "#helloworld",
+	"categoryName": "abc",
+	"imgB64": "bWF5byBvciBtdXN0Pw=="
+}'
+code: 400
+response: '{}'
+---
+case_title: Upload act with invalid timestamp
+route: /api/v1/acts
+method: POST
+request: '{
+  "actId": 87,
+	"username": "xyz",
+	"timestamp": "10/10/2034",
+	"caption": "#helloworld",
+	"categoryName": "abc",
+	"imgB64": "bWF5byBvciBtdXN0Pw=="
+}'
+code: 400
+response: '{}'
+---
+case_title: Upload act with invalid category name
+route: /api/v1/acts
+method: POST
+request: '{
+  "actId": 78,
+	"username": "xyz",
+	"timestamp": "10-10-2019:45-23-03",
+	"caption": "#helloworld",
+	"categoryName": "qwe",
+	"imgB64": "bWF5byBvciBtdXN0Pw=="
+}'
+code: 400
+response: '{}'
+---
+case_title: Upload act with invalid imgB64
+route: /api/v1/acts
+method: POST
+request: '{
+  "actId": 36,
+	"username": "xyz",
+	"timestamp": "10-10-2019:45-23-03",
+	"caption": "#helloworld",
+	"categoryName": "abc",
+	"imgB64": "$bWF5byBvci$BtdX$N0Pw=="
+}'
+code: 400
+response: '{}'
+---
+case_title: Upload act with upvotes field
+route: /api/v1/acts
+method: POST
+request: '{
+  "actId": 336,
+	"username": "xyz",
+  "upvotes": 20,
+	"timestamp": "10-10-2019:45-23-03",
+	"caption": "#helloworld",
+	"categoryName": "abc",
+	"imgB64": "$bWF5byBvci$BtdX$N0Pw=="
+}'
+code: 400
+response: '{}'
+---
+case_title: List acts for 'abc'
+route: /api/v1/categories/abc/acts
+method: GET
+request: '{}'
+code: 200
+response: '[
+  {
+    "actId": 1234,
+    "username": "xyz",
+    "timestamp": "10-10-2019:45-23-03",
+    "caption": "#helloworld",
+    "upvotes": 0,
+    "categoryName": "abc",
+    "imgB64": "bWF5byBvciBtdXN0Pw=="
+  }
+]'
+---
+case_title: List categories
+route: /api/v1/categories
+method: GET
+request: '{}'
+code: 200
+response: '{ "abc": 1 }'
+skip_invalid_methods_test: 'True'
+---
+case_title: Upvote act 1234
+route: /api/v1/acts/upvote
+method: POST
+request: '[ 1234 ]'
+code: 200
+response: '{}'
+---
+case_title: Upvote invalid actId
+route: /api/v1/acts/upvote
+method: POST
+request: '[ 56 ]'
+code: 400
+response: '{}'
+---
+case_title: List acts for 'abc'
+route: /api/v1/categories/abc/acts
+method: GET
+request: '{}'
+code: 200
+response: '[
+  {
+    "actId": 1234,
+    "username": "xyz",
+    "timestamp": "10-10-2019:45-23-03",
+    "caption": "#helloworld",
+    "upvotes": 1,
+    "categoryName": "abc",
+    "imgB64": "bWF5byBvciBtdXN0Pw=="
+  }
+]'
+skip_invalid_methods_test: 'True'
+---
+case_title: Delete act 1234
+route: /api/v1/acts/1234
+method: DELETE
+request: '{}'
+code: 200
+response: '{}'
+---
+case_title: List acts for 'abc'
+route: /api/v1/categories/abc/acts
+method: GET
+request: '{}'
+code: 204
+response: '[]'
+---
+case_title: List categories
+route: /api/v1/categories
+method: GET
+request: '{}'
+code: 200
+response: '{ "abc": 0 }'
+skip_invalid_methods_test: 'True'
+---
+case_title: Delete invalid actId
+route: /api/v1/categories/567
+method: DELETE
+request: '{}'
+code: 400
+response: '{}'
+---
+case_title: Delete category 'abc'
+route: /api/v1/categories/abc
+method: DELETE
+request: '{}'
+code: 200
+response: '{}'
+skip_invalid_methods_test: 'True'
+---
+case_title: Delete user 'xyz'
+route: /api/v1/users/xyz
+method: DELETE
+request: '{}'
+code: 200
+response: '{}'
+skip_invalid_methods_test: 'True'

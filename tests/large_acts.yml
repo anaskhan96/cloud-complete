@@ -1,0 +1,120 @@
+title: "Tests for adding and listing acts ( > 100 )"
+---
+case_title: Add user 'xyz'
+route: /api/v1/users
+method: POST
+request: '{
+	"username": "xyz",
+	"password": "3d725109c7e7c0bfb9d709836735b56d943d263f"
+}'
+code: 201
+response: '{}'
+skip_invalid_methods_test: 'True' 
+---
+case_title: Add category 'abc'
+route: /api/v1/categories
+method: POST
+request: '[ "abc" ]'
+code: 201
+response: '{}'
+skip_invalid_methods_test: 'True'
+---
+case_title: Upload 105 acts
+route: /api/v1/acts
+method: POST
+request: '{
+  "actId": 1,
+	"username": "xyz",
+	"timestamp": "10-10-2019:45-23-03",
+	"caption": "#helloworld",
+	"categoryName": "abc",
+	"imgB64": "bWF5byBvciBtdXN0Pw=="
+}'
+code: 201
+response: '{}'
+repeat: 105
+request_iter: 'actId'
+repeat_str: 'Repeated 105 times with incrementing actId'
+skip_invalid_methods_test: 'True'
+---
+case_title: List acts for 'abc'
+route: /api/v1/categories/abc/acts
+method: GET
+request: '{}'
+code: 413
+response: '[]'
+---
+case_title: List number of acts for 'abc'
+route: /api/v1/categories/abc/acts/size
+method: GET
+request: '{}'
+code: 200
+response: '[105]'
+---
+case_title: List number of acts for 'xyz'
+route: /api/v1/categories/xyz/acts/size
+method: GET
+request: '{}'
+code: 400
+response: '[]'
+---
+case_title: List some acts for 'abc'
+route: /api/v1/categories/abc/acts?start=1&end=5
+method: GET
+request: '{}'
+code: 200
+response: '[
+	{
+		"actId": 105,
+		"username": "xyz",
+		"timestamp": "10-10-2019:45-23-03",
+		"caption": "#helloworld",
+		"upvotes": 0,
+		"categoryName": "abc",
+		"imgB64": "bWF5byBvciBtdXN0Pw=="
+	}
+]'
+response_iter: 'actId'
+response_repeat: 4
+skip_invalid_methods_test: 'True'
+---
+case_title: List some acts for 'abc' with out-of-bounds range
+route: /api/v1/categories/abc/acts?start=200&end=300
+method: GET
+request: '{}'
+code: 400
+response: '[]'
+---
+case_title: List some acts for 'abc' with too large range
+route: /api/v1/categories/abc/acts?start=1&end=105
+method: GET
+request: '{}'
+code: 413
+response: '[]'
+---
+case_title: Delete all acts
+route: /api/v1/acts/1
+method: DELETE
+request: '{}'
+code: 200
+response: '{}'
+repeat: 105
+route_iter: 'True'
+repeat_str: 'Repeated 105 times with incrementing actId'
+skip_invalid_methods_test: 'True'
+---
+case_title: Delete category 'abc'
+route: /api/v1/categories/abc
+method: DELETE
+request: '{}'
+code: 200
+response: '{}'
+skip_invalid_methods_test: 'True'
+---
+case_title: Delete user 'xyz'
+route: /api/v1/users/xyz
+method: DELETE
+request: '{}'
+code: 200
+response: '{}'
+skip_invalid_methods_test: 'True'
