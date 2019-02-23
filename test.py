@@ -8,10 +8,15 @@ from jinja2 import Environment, FileSystemLoader
 from pprint import pprint
 import httplib
 import sys
+from pymongo import MongoClient
+import datetime
 
 TESTS_DIR = 'tests'
 TEAMS_FILE = 'teams.json'
 REPORTS_DIR = 'reports'
+client = MongoClient('mongodb://anask.xyz:27017')
+db = client['ccbd-reports']
+reports_collection = db['reports']
 
 def get_invalid_methods(case):
     invalid_methods = ['GET', 'POST', 'DELETE']
@@ -284,6 +289,7 @@ reports = run_tests(tests, teams)
 #pprint(reports)
 
 print('Done. Check \'reports\' folder')
+print('Please wait till the reports are uploaded to the database')
 
 # -----------------------------------------------------------------------
 
@@ -303,3 +309,13 @@ for team_id in reports.keys():
     file = open(path, 'w') 
     file.write(encoded_report)
     file.close()
+
+    # Insert the report in the database
+    report_document = {
+        'team_id': team_id,
+        'encoded_report': encoded_report,
+        'date': datetime.datetime.now()
+    }
+    reports_collection.insert_one(report_document)
+    print('Report for team ' + team_id + ' has been updated in the database')
+    
