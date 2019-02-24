@@ -169,8 +169,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
                     for(let i = 0; i < data.length; i++) {
                         let br = document.createElement('br');
                         let button = document.createElement('button');
-                        let reportLink = "window.location.href='" + data[i].link + "'";
-                        button.setAttribute('onclick', reportLink);
+                        button.setAttribute('onclick', "generateLink('" + data[i].link + "');");
                         button.innerHTML = "View " + data[i].team_id + "'s report";
                         document.body.appendChild(br);
                         document.body.appendChild(br);
@@ -180,6 +179,13 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
                 }
             });
             swal("Submitted!", "Kindly wait for a dialog to popup confirming the reports have been generated.", "info");
+        }
+
+        function generateLink(link) {
+            let a = document.createElement('a');
+            a.setAttribute('href', link);
+            a.setAttribute('target', '_blank');
+            a.click();
         }
     </script>
 </head>
