@@ -160,7 +160,6 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
             data.append('teams', input.files[0]);
             let i = 0;
             document.getElementById('genbtn').disabled = true;
-            swal("Submitting", "The reports will be generated and sent to you one by one.", "info");
             fetch('/ccbd/generate', {
                 method: 'POST',
                 body: data
