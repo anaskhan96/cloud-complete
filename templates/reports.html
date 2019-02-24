@@ -1,16 +1,94 @@
 <html>
-    <head>
-        <title>All Reports</title>
-    </head>
-    <body style="margin:15; padding:15;">
-        <table border="1" align="center">
-            {% for item in items %}
-            <tr>
-                <td style="padding:15px;">{{ item.team }}</td>
-                <td style="padding:15px;"><a href="{{ item.link }}">Click here for the report</a></td>
-                <td style="padding:15px;">{{ item.date }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </body>
+
+<head>
+    <title>All Reports</title>
+    <style>
+        body {
+            margin: 1em auto;
+            max-width: 40em;
+            padding: 0 .62em;
+            font: 1.2em/1.62 sans-serif;
+        }
+
+        body * {
+            margin: 2px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            line-height: 1.2;
+        }
+
+        @media print {
+            body {
+                max-width: none
+            }
+        }
+
+        input,
+        button {
+            background-color: #e7e7e7;
+            border: none;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            -webkit-transition-duration: 0.4s;
+            /* Safari */
+            transition-duration: 0.4s;
+        }
+
+        input:hover,
+        button:hover {
+            background-color: black;
+            color: white;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table,
+        th,
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+    <script>
+        function filter() {
+            let teamId = document.getElementById('teamId').value;
+            window.location.href = "/ccbd/reports/" + teamId;
+        }
+    </script>
+</head>
+
+<body>
+    <center>
+        <input id="teamId" type="text" placeholder="Exact team ID">
+        <button onclick="filter();">Filter</button>
+        <button onclick="window.location.href='/ccbd/reports'">Show All</button>
+        <button onclick="window.location.href='/ccbd'">Go to Home</button>
+    </center>
+    <table>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.team }}</td>
+            <td><a href="{{ item.link }}">Click here for the report</a></td>
+            <td>{{ item.date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
 </html>
