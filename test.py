@@ -227,6 +227,27 @@ def test_invalid_methods(case, uri):
 def get_uri(public_ip, case):
     return 'http://' + public_ip + case['route']
 
+def run_tests_single(tests, team_id, public_ip):
+    report = { 'public_ip': public_ip }
+    print('Running tests for team ' + team_id)
+    test_results = []
+    for t in tests:
+        test_title = t['title']
+        test = t['test']
+        test_result = []
+        for case in test:
+            uri = get_uri(public_ip, case)
+            case_result = copy.deepcopy(case)
+            case_result['sub_results'] = test_case(case, uri)
+            case_result['request'] = get_pretty_json_str(case_result['request'])
+            test_result.append(case_result)
+        test_results.append({
+            'test_title': test_title,
+            'test_result': test_result
+        })
+    report['test_results'] = test_results
+    return report
+
 def run_tests(tests, teams):
     reports = {}
 
@@ -321,11 +342,9 @@ if __name__ == '__main__':
 def generate(teams_str):
     teams = json.loads(teams_str)
     print("Running tests...")
-    reports = run_tests(tests, teams)
 
-    response = []
-    for team_id in reports.keys():
-        report = reports[team_id]
+    for (team_id, public_ip) in teams.items():
+        report = run_tests_single(tests, team_id, public_ip)
         html_report = template.render(team_id=team_id, report=report)
         encoded_report = html_report.encode("UTF-8")
         # Insert the report in the database
