@@ -9,7 +9,7 @@ from pprint import pprint
 import httplib
 import sys
 from pymongo import MongoClient
-import datetime
+import time
 
 TESTS_DIR = 'tests'
 TEAMS_FILE = 'teams.json'
@@ -314,7 +314,7 @@ for team_id in reports.keys():
     report_document = {
         'team_id': team_id,
         'encoded_report': encoded_report,
-        'date': datetime.datetime.now()
+        'date': round(time.time(), 2)
     }
     reports_collection.insert_one(report_document)
     print('Report for team ' + team_id + ' has been updated in the database')

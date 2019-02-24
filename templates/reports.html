@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>All Reports</title>
+    </head>
+    <body style="margin:15; padding:15;">
+        <table border="1" align="center">
+            {% for item in items %}
+            <tr>
+                <td style="padding:15px;">{{ item.team }}</td>
+                <td style="padding:15px;"><a href="{{ item.link }}">Click here for the report</a></td>
+                <td style="padding:15px;">{{ item.date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
