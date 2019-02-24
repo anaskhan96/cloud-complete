@@ -331,13 +331,13 @@ if __name__ == '__main__':
         file.close()
 
         # Insert the report in the database
-        report_document = {
-            'team_id': team_id,
-            'encoded_report': encoded_report,
-            'date': round(time.time(), 2)
-        }
-        reports_collection.insert_one(report_document)
-        print('Report for team ' + team_id + ' has been updated in the database')
+        #report_document = {
+        #    'team_id': team_id,
+        #    'encoded_report': encoded_report,
+        #    'date': round(time.time(), 2)
+        #}
+        #reports_collection.insert_one(report_document)
+        #print('Report for team ' + team_id + ' has been updated in the database')
 
 def generate(teams_str):
     teams = json.loads(teams_str)

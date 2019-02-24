@@ -182,6 +182,9 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
             let i = 0;
             document.getElementById('genbtn').disabled = true;
             let center = document.getElementById('centr');
+            let p = document.createElement('p');
+            p.innerHTML = "Once the reports are generated, the page will contain new links. Please stay patient.";
+            center.appendChild(p);
             let div = document.createElement('div');
             div.setAttribute('class', 'loader');
             center.appendChild(div);
@@ -222,6 +225,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
                     swal("Generated!", "You can now view the reports.", "success");
                     let divToDelete = document.getElementsByClassName('loader')[0];
                     center.removeChild(divToDelete);
+                    center.removeChild(p);
                     document.getElementById('genbtn').disabled = false;
                 }
             });

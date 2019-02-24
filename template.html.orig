@@ -1,0 +1,68 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Cloud Computing Assignment 2</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <h2>16CS352: Cloud Computing – Assignment 2</h2>
+
+  Evaluation for <code>{{ team_id }}</code><br>
+
+  IP address: <code>{{ report.public_ip }}</code><br>
+
+  <ul>
+    {% for tr in report.test_results %}
+      <li>
+        <h4>{{ tr.test_title }}</h4>
+        <ol>
+          {% for case_result in tr.test_result %}
+            <li>
+              {% if 'case_title' in case_result %}
+                <b><u>{{ case_result['case_title'] }}</u></b><br>
+              {% endif %}
+              {% if 'repeat_str' in case_result %}
+                <i>{{ case_result['repeat_str'] }}</i><br>
+              {% endif %}
+              Route: <code>{{ case_result['route'] }}</code><br>
+              Method: <code>{{ case_result['method'] }}</code><br>
+              Request: <code>{{ case_result['request'] }}</code><br>
+              {% for sub_result in case_result['sub_results'] %}
+                <b>
+                {% if sub_result[0] == 'Positive' %}
+                  <span id="positive_result">
+                    {{ sub_result[1] }}<br>
+                  </span>
+                {% else %}
+                  <span id="negative_result">
+                    {{ sub_result[1] }}<br>
+                    {{ sub_result[2] }}<br>
+                  </span>
+                {% endif %}
+                </b>
+              {% endfor %}
+            </li>
+          {% endfor %}
+        </ol>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <script src="js/vendor/modernizr-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
