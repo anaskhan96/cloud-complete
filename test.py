@@ -342,9 +342,11 @@ if __name__ == '__main__':
 def generate(teams_str):
     teams = json.loads(teams_str)
     print("Running tests...")
+    reports = run_tests(tests, teams)
 
-    for (team_id, public_ip) in teams.items():
-        report = run_tests_single(tests, team_id, public_ip)
+    response = []
+    for team_id in reports.keys():
+        report = reports[team_id]
         html_report = template.render(team_id=team_id, report=report)
         encoded_report = html_report.encode("UTF-8")
         # Insert the report in the database
@@ -360,4 +362,5 @@ def generate(teams_str):
             'team_id': team_id,
             'link': '/ccbd/reports/' + team_id + '/' + str(date)
         }
-        yield json.dumps(data_chunk)
+        response.append(data_chunk)
+    return response

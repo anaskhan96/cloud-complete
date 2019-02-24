@@ -24,9 +24,9 @@ def home():
 def teamsupload():
     file = request.files['teams']
     try:
-        #res = generate(file.read())
-        #return jsonify({'success':True, 'data': res})
-        return Response(generate(file.read()), mimetype='application/json')
+        res = generate(file.read())
+        return jsonify({'success':True, 'data': res})
+        #return Response(generate(file.read()), mimetype='application/json')
     except:
         return jsonify({'success':False})
 

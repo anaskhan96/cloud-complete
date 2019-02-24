@@ -161,65 +161,64 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
             let i = 0;
             document.getElementById('genbtn').disabled = true;
             setTimeout(() => {
-                swal("Submitting", "The reports will be generated and sent one by one", "info");
-            }, 2000);
+                swal("Submitting", "The reports will be generated, kindly be patient as it might take time...", "info");
+            }, 1000);
             fetch('/ccbd/generate', {
                 method: 'POST',
                 body: data
-            }).then(response => response.body.getReader()).then(reader => {
-                let read;
-                reader.read().then(read = ({ done, value }) => {
-                    if (done) {
-                        swal("Finished!", "All reports for the teams have been generated.", "success");
-                        return;
-                    } else {
-                        let res = JSON.parse(String.fromCharCode.apply(String, value));
-                        swal("Generated " + ++i + " reports", "Please wait patiently while the others are generated.", "info");
-                        populateBody(res);
-                        reader.read().then(read);
-                    };
-                });
-            }).catch(err => {
-                swal("Something went wrong!", "Check if the json file is correct, and try again.", "error");
-                console.log(err);
-            });
-            document.getElementById('genbtn').disabled = false;
-                //.then(response => response.json()).then(res => {
-                //    if(!res.success) {
-                //        swal("Something went wrong!", "Check if the json file is correct, and try again.", "error");
-                //    } else {
-                //        let data = res.data;
-                //        for(let i = 0; i < data.length; i++) {
-                //            let br = document.createElement('br');
-                //            let button = document.createElement('button');
-                //            button.setAttribute('onclick', "generateLink('" + data[i].link + "');");
-                //            button.innerHTML = "View " + data[i].team_id + "'s report";
-                //            document.body.appendChild(br);
-                //            document.body.appendChild(br);
-                //            document.body.appendChild(button);
-                //        }
-                //        swal("Generated!", "You can now view the reports.", "success");
-                //    }
+            }).then(response => response.json()).then(res => {
+                //    let read;
+                //    reader.read().then(read = ({ done, value }) => {
+                //        if (done) {
+                //            swal("Finished!", "All reports for the teams have been generated.", "success");
+                //            return;
+                //        } else {
+                //            let res = JSON.parse(String.fromCharCode.apply(String, value));
+                //            swal("Generated " + ++i + " reports", "Please wait patiently while the others are generated.", "info");
+                //            populateBody(res);
+                //            reader.read().then(read);
+                //        };
+                //    });
+                //}).catch(err => {
+                //    swal("Something went wrong!", "Check if the json file is correct, and try again.", "error");
+                //    console.log(err);
                 //});
-                //swal("Submitted!", "Kindly wait for a dialog to popup confirming the reports have been generated.", "info");
-            }
+                //document.getElementById('genbtn').disabled = false;
+                if (!res.success) {
+                    swal("Something went wrong!", "Check if the json file is correct, and try again.", "error");
+                } else {
+                    let data = res.data;
+                    for (let i = 0; i < data.length; i++) {
+                        let br = document.createElement('br');
+                        let button = document.createElement('button');
+                        button.setAttribute('onclick', "generateLink('" + data[i].link + "');");
+                        button.innerHTML = "View " + data[i].team_id + "'s report";
+                        document.body.appendChild(br);
+                        document.body.appendChild(br);
+                        document.body.appendChild(button);
+                    }
+                    swal("Generated!", "You can now view the reports.", "success");
+                    document.getElementById('genbtn').disabled = false;
+                }
+            });
+        }
 
         function populateBody(data) {
-                    let br = document.createElement('br');
-                    let button = document.createElement('button');
-                    button.setAttribute('onclick', "generateLink('" + data.link + "');");
-                    button.innerHTML = "View " + data.team_id + "'s report";
-                    document.body.appendChild(br);
-                    document.body.appendChild(br);
-                    document.body.appendChild(button)
-                }
+            let br = document.createElement('br');
+            let button = document.createElement('button');
+            button.setAttribute('onclick', "generateLink('" + data.link + "');");
+            button.innerHTML = "View " + data.team_id + "'s report";
+            document.body.appendChild(br);
+            document.body.appendChild(br);
+            document.body.appendChild(button)
+        }
 
         function generateLink(link) {
-                    let a = document.createElement('a');
-                    a.setAttribute('href', link);
-                    a.setAttribute('target', '_blank');
-                    a.click();
-                }
+            let a = document.createElement('a');
+            a.setAttribute('href', link);
+            a.setAttribute('target', '_blank');
+            a.click();
+        }
     </script>
 </head>
 
