@@ -274,48 +274,70 @@ def run_tests(tests, teams):
 
 tests = load_tests()
 #pprint(tests)
-
-teams = load_teams()
-#pprint(teams)
-
-if len(sys.argv) == 3 and sys.argv[1] == '--team':
-    team_id = sys.argv[2]
-    if team_id in teams:
-        teams = { team_id: teams[team_id] }
-
-#pprint(teams)
-
-reports = run_tests(tests, teams)
-#pprint(reports)
-
-print('Done. Check \'reports\' folder')
-print('Please wait till the reports are uploaded to the database')
-
-# -----------------------------------------------------------------------
-
 fs_loader = FileSystemLoader('.')
 env = Environment(loader = fs_loader)
-
 template = env.get_template('template.html')
 
-for team_id in reports.keys():
-    report = reports[team_id]
-    html_report = template.render(team_id=team_id, report=report)
-    encoded_report = html_report.encode("UTF-8")
+if __name__ == '__main__':
+    teams = load_teams()
+    #pprint(teams)
 
-    filename = team_id + '.html'
-    path = os.path.join(REPORTS_DIR, filename)
+    if len(sys.argv) == 3 and sys.argv[1] == '--team':
+        team_id = sys.argv[2]
+        if team_id in teams:
+            teams = { team_id: teams[team_id] }
 
-    file = open(path, 'w') 
-    file.write(encoded_report)
-    file.close()
+    #pprint(teams)
 
-    # Insert the report in the database
-    report_document = {
-        'team_id': team_id,
-        'encoded_report': encoded_report,
-        'date': round(time.time(), 2)
-    }
-    reports_collection.insert_one(report_document)
-    print('Report for team ' + team_id + ' has been updated in the database')
-    
+    reports = run_tests(tests, teams)
+    #pprint(reports)
+
+    print('Done. Check \'reports\' folder')
+    print('Please wait till the reports are uploaded to the database')
+
+    # -----------------------------------------------------------------------
+
+    for team_id in reports.keys():
+        report = reports[team_id]
+        html_report = template.render(team_id=team_id, report=report)
+        encoded_report = html_report.encode("UTF-8")
+
+        filename = team_id + '.html'
+        path = os.path.join(REPORTS_DIR, filename)
+
+        file = open(path, 'w') 
+        file.write(encoded_report)
+        file.close()
+
+        # Insert the report in the database
+        report_document = {
+            'team_id': team_id,
+            'encoded_report': encoded_report,
+            'date': round(time.time(), 2)
+        }
+        reports_collection.insert_one(report_document)
+        print('Report for team ' + team_id + ' has been updated in the database')
+
+def generate(teams_str):
+    teams = json.loads(teams_str)
+    reports = run_tests(tests, teams)
+
+    response = []
+    for team_id in reports.keys():
+        report = reports[team_id]
+        html_report = template.render(team_id=team_id, report=report)
+        encoded_report = html_report.encode("UTF-8")
+        # Insert the report in the database
+        date = round(time.time(), 2)
+        report_document = {
+            'team_id': team_id,
+            'encoded_report': encoded_report,
+            'date': date
+        }
+        reports_collection.insert_one(report_document)
+        print('Report for team ' + team_id + ' has been updated in the database')
+        response.append({
+            'team_id': team_id,
+            'link': '/ccbd/reports/' + team_id + '/' + str(date)
+        })
+    return response
