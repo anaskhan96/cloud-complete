@@ -320,6 +320,7 @@ if __name__ == '__main__':
 
 def generate(teams_str):
     teams = json.loads(teams_str)
+    print("Running tests...")
     reports = run_tests(tests, teams)
 
     response = []
@@ -336,8 +337,8 @@ def generate(teams_str):
         }
         reports_collection.insert_one(report_document)
         print('Report for team ' + team_id + ' has been updated in the database')
-        response.append({
+        data_chunk = {
             'team_id': team_id,
             'link': '/ccbd/reports/' + team_id + '/' + str(date)
-        })
-    return response
+        }
+        yield json.dumps(data_chunk)

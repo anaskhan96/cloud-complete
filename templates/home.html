@@ -153,40 +153,70 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
         function generateReport() {
             let input = document.getElementById('teaminput');
             if (input.files.length == 0) {
-                swal("Wait a sec!", "Can't proceed unless you provide a teams.json, man", "error");
+                swal("Wait a sec!", "Can't proceed unless you provide a teams.json", "error");
                 return
             }
             let data = new FormData();
             data.append('teams', input.files[0]);
+            let i = 0;
+            document.getElementById('genbtn').disabled = true;
             fetch('/ccbd/generate', {
                 method: 'POST',
                 body: data
-            }).then(response => response.json()).then(res => {
-                if(!res.success) {
-                    swal("Something went wrong!", "Check if the json file is correct, and try again.", "error");
-                } else {
-                    let data = res.data;
-                    for(let i = 0; i < data.length; i++) {
-                        let br = document.createElement('br');
-                        let button = document.createElement('button');
-                        button.setAttribute('onclick', "generateLink('" + data[i].link + "');");
-                        button.innerHTML = "View " + data[i].team_id + "'s report";
-                        document.body.appendChild(br);
-                        document.body.appendChild(br);
-                        document.body.appendChild(button);
-                    }
-                    swal("Generated!", "You can now view the reports.", "success");
-                }
+            }).then(response => response.body.getReader()).then(reader => {
+                let read;
+                reader.read().then(read = ({ done, value }) => {
+                    if (done) {
+                        swal("Finished!", "All reports for the teams have been generated.", "success");
+                        return;
+                    } else {
+                        let res = JSON.parse(String.fromCharCode.apply(String, value));
+                        swal("Generated " + ++i + " reports", "Please wait patiently while the others are generated.", "info");
+                        populateBody(res);
+                        reader.read().then(read);
+                    };
+                });
+            }).catch(err => {
+                swal("Something went wrong!", "Check if the json file is correct, and try again.", "error");
+                console.log(err);
             });
-            swal("Submitted!", "Kindly wait for a dialog to popup confirming the reports have been generated.", "info");
-        }
+            document.getElementById('genbtn').disabled = false;
+                //.then(response => response.json()).then(res => {
+                //    if(!res.success) {
+                //        swal("Something went wrong!", "Check if the json file is correct, and try again.", "error");
+                //    } else {
+                //        let data = res.data;
+                //        for(let i = 0; i < data.length; i++) {
+                //            let br = document.createElement('br');
+                //            let button = document.createElement('button');
+                //            button.setAttribute('onclick', "generateLink('" + data[i].link + "');");
+                //            button.innerHTML = "View " + data[i].team_id + "'s report";
+                //            document.body.appendChild(br);
+                //            document.body.appendChild(br);
+                //            document.body.appendChild(button);
+                //        }
+                //        swal("Generated!", "You can now view the reports.", "success");
+                //    }
+                //});
+                //swal("Submitted!", "Kindly wait for a dialog to popup confirming the reports have been generated.", "info");
+            }
+
+        function populateBody(data) {
+                    let br = document.createElement('br');
+                    let button = document.createElement('button');
+                    button.setAttribute('onclick', "generateLink('" + data.link + "');");
+                    button.innerHTML = "View " + data.team_id + "'s report";
+                    document.body.appendChild(br);
+                    document.body.appendChild(br);
+                    document.body.appendChild(button)
+                }
 
         function generateLink(link) {
-            let a = document.createElement('a');
-            a.setAttribute('href', link);
-            a.setAttribute('target', '_blank');
-            a.click();
-        }
+                    let a = document.createElement('a');
+                    a.setAttribute('href', link);
+                    a.setAttribute('target', '_blank');
+                    a.click();
+                }
     </script>
 </head>
 
@@ -200,7 +230,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
     "CC_123_456_789": "127.0.0.1:8888"
 }</code></pre>
     <input id="teaminput" type="file" name="teams" />
-    <button onclick="generateReport();">Generate Report</button><br><br>
+    <button id="genbtn" onclick="generateReport();">Generate Report</button><br><br>
     <center><button onclick="window.location.href='/ccbd/reports'">View All Reports</button></center>
 </body>
 

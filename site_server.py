@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, render_template_string, send_from_directory, jsonify
+from flask import Flask, render_template, request, render_template_string, send_from_directory, jsonify, Response
 from werkzeug import secure_filename
 from flask_basicauth import BasicAuth
 from pymongo import MongoClient
@@ -24,8 +24,9 @@ def home():
 def teamsupload():
     file = request.files['teams']
     try:
-        res = generate(file.read())
-        return jsonify({'success':True, 'data': res})
+        #res = generate(file.read())
+        #return jsonify({'success':True, 'data': res})
+        return Response(generate(file.read()), mimetype='application/json')
     except:
         return jsonify({'success':False})
 
