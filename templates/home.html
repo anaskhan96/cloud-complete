@@ -43,6 +43,27 @@
             color: white;
         }
 
+        .loader {
+            border: 16px solid #f3f3f3;
+            /* Light grey */
+            border-top: 16px solid black;
+            /* Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
         /*
 
 Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
@@ -160,9 +181,10 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
             data.append('teams', input.files[0]);
             let i = 0;
             document.getElementById('genbtn').disabled = true;
-            setTimeout(() => {
-                swal("Submitting", "The reports will be generated, kindly be patient as it might take time...", "info");
-            }, 1000);
+            let center = document.getElementById('centr');
+            let div = document.createElement('div');
+            div.setAttribute('class', 'loader');
+            center.appendChild(div);
             fetch('/ccbd/generate', {
                 method: 'POST',
                 body: data
@@ -198,6 +220,8 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
                         document.body.appendChild(button);
                     }
                     swal("Generated!", "You can now view the reports.", "success");
+                    let divToDelete = document.getElementsByClassName('loader')[0];
+                    center.removeChild(divToDelete);
                     document.getElementById('genbtn').disabled = false;
                 }
             });
@@ -234,6 +258,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
     <input id="teaminput" type="file" name="teams" />
     <button id="genbtn" onclick="generateReport();">Generate Report</button><br><br>
     <center><button onclick="window.location.href='/ccbd/reports'">View All Reports</button></center>
+    <center id="centr"></center>
 </body>
 
 </html>
