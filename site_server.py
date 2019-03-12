@@ -4,6 +4,9 @@ from flask_basicauth import BasicAuth
 from pymongo import MongoClient
 from datetime import datetime
 from test import generate
+from container_test import container_generate
+from werkzeug.utils import secure_filename
+import os
 
 client = MongoClient('mongodb://anask.xyz:27017')
 db = client["ccbd-reports"]
@@ -30,6 +33,26 @@ def teamsupload():
         #return Response(generate(file.read()), mimetype='application/json')
     except:
         return jsonify({'success':False})
+
+@app.route('/ccbd/containerGenerate', methods=['POST'])
+@basic_auth.required
+def container_teamsupload():
+    team_file = request.files['containerTeams']
+    private_key_files = request.files.getlist('privateKeys[]')
+    for private_key_file in private_key_files:
+        private_key_file.save(secure_filename(private_key_file.filename))
+    response = {}
+    try:
+        res = container_generate(team_file.read())
+        response['success'] = True
+        response['data'] = res
+    except:
+        response['success'] = False
+    
+    for private_key_file in private_key_files:
+        os.remove(secure_filename(private_key_file.filename))
+    
+    return jsonify(response)
 
 @app.route('/ccbd/reports', methods=['GET'])
 @basic_auth.required

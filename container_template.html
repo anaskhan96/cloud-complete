@@ -10,8 +10,691 @@
 
   <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
+  <!--<link rel="stylesheet" href="css/normalize.css">-->
+  <style>
+    /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
+
+    /* Document
+   ========================================================================== */
+
+    /**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+
+    html {
+      line-height: 1.15;
+      /* 1 */
+      -webkit-text-size-adjust: 100%;
+      /* 2 */
+    }
+
+    /* Sections
+   ========================================================================== */
+
+    /**
+ * Remove the margin in all browsers.
+ */
+
+    body {
+      margin: 0;
+    }
+
+    /**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+
+    h1 {
+      font-size: 2em;
+      margin: 0.67em 0;
+    }
+
+    /* Grouping content
+   ========================================================================== */
+
+    /**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+
+    hr {
+      box-sizing: content-box;
+      /* 1 */
+      height: 0;
+      /* 1 */
+      overflow: visible;
+      /* 2 */
+    }
+
+    /**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+    pre {
+      font-family: monospace, monospace;
+      /* 1 */
+      font-size: 1em;
+      /* 2 */
+    }
+
+    /* Text-level semantics
+   ========================================================================== */
+
+    /**
+ * Remove the gray background on active links in IE 10.
+ */
+
+    a {
+      background-color: transparent;
+    }
+
+    /**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+
+    abbr[title] {
+      border-bottom: none;
+      /* 1 */
+      text-decoration: underline;
+      /* 2 */
+      text-decoration: underline dotted;
+      /* 2 */
+    }
+
+    /**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+
+    b,
+    strong {
+      font-weight: bolder;
+    }
+
+    /**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+    code,
+    kbd,
+    samp {
+      font-family: monospace, monospace;
+      /* 1 */
+      font-size: 1em;
+      /* 2 */
+    }
+
+    /**
+ * Add the correct font size in all browsers.
+ */
+
+    small {
+      font-size: 80%;
+    }
+
+    /**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+
+    sub,
+    sup {
+      font-size: 75%;
+      line-height: 0;
+      position: relative;
+      vertical-align: baseline;
+    }
+
+    sub {
+      bottom: -0.25em;
+    }
+
+    sup {
+      top: -0.5em;
+    }
+
+    /* Embedded content
+   ========================================================================== */
+
+    /**
+ * Remove the border on images inside links in IE 10.
+ */
+
+    img {
+      border-style: none;
+    }
+
+    /* Forms
+   ========================================================================== */
+
+    /**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+      font-family: inherit;
+      /* 1 */
+      font-size: 100%;
+      /* 1 */
+      line-height: 1.15;
+      /* 1 */
+      margin: 0;
+      /* 2 */
+    }
+
+    /**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+
+    button,
+    input {
+      /* 1 */
+      overflow: visible;
+    }
+
+    /**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+
+    button,
+    select {
+      /* 1 */
+      text-transform: none;
+    }
+
+    /**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+
+    button,
+    [type="button"],
+    [type="reset"],
+    [type="submit"] {
+      -webkit-appearance: button;
+    }
+
+    /**
+ * Remove the inner border and padding in Firefox.
+ */
+
+    button::-moz-focus-inner,
+    [type="button"]::-moz-focus-inner,
+    [type="reset"]::-moz-focus-inner,
+    [type="submit"]::-moz-focus-inner {
+      border-style: none;
+      padding: 0;
+    }
+
+    /**
+ * Restore the focus styles unset by the previous rule.
+ */
+
+    button:-moz-focusring,
+    [type="button"]:-moz-focusring,
+    [type="reset"]:-moz-focusring,
+    [type="submit"]:-moz-focusring {
+      outline: 1px dotted ButtonText;
+    }
+
+    /**
+ * Correct the padding in Firefox.
+ */
+
+    fieldset {
+      padding: 0.35em 0.75em 0.625em;
+    }
+
+    /**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+
+    legend {
+      box-sizing: border-box;
+      /* 1 */
+      color: inherit;
+      /* 2 */
+      display: table;
+      /* 1 */
+      max-width: 100%;
+      /* 1 */
+      padding: 0;
+      /* 3 */
+      white-space: normal;
+      /* 1 */
+    }
+
+    /**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+
+    progress {
+      vertical-align: baseline;
+    }
+
+    /**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+
+    textarea {
+      overflow: auto;
+    }
+
+    /**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+
+    [type="checkbox"],
+    [type="radio"] {
+      box-sizing: border-box;
+      /* 1 */
+      padding: 0;
+      /* 2 */
+    }
+
+    /**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+
+    [type="number"]::-webkit-inner-spin-button,
+    [type="number"]::-webkit-outer-spin-button {
+      height: auto;
+    }
+
+    /**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+
+    [type="search"] {
+      -webkit-appearance: textfield;
+      /* 1 */
+      outline-offset: -2px;
+      /* 2 */
+    }
+
+    /**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+
+    [type="search"]::-webkit-search-decoration {
+      -webkit-appearance: none;
+    }
+
+    /**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+
+    ::-webkit-file-upload-button {
+      -webkit-appearance: button;
+      /* 1 */
+      font: inherit;
+      /* 2 */
+    }
+
+    /* Interactive
+   ========================================================================== */
+
+    /*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+
+    details {
+      display: block;
+    }
+
+    /*
+ * Add the correct display in all browsers.
+ */
+
+    summary {
+      display: list-item;
+    }
+
+    /* Misc
+   ========================================================================== */
+
+    /**
+ * Add the correct display in IE 10+.
+ */
+
+    template {
+      display: none;
+    }
+
+    /**
+ * Add the correct display in IE 10.
+ */
+
+    [hidden] {
+      display: none;
+    }
+  </style>
+  <!---<link rel="stylesheet" href="css/main.css">-->
+  <style>
+    /*! HTML5 Boilerplate v6.1.0 | MIT License | https://html5boilerplate.com/ */
+
+    /*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+    /* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+    html {
+      color: #222;
+      font-size: 1em;
+      line-height: 1.4;
+    }
+
+    /*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Vendor-prefixed and regular ::selection selectors cannot be combined:
+ * https://stackoverflow.com/a/16982510/7133471
+ *
+ * Customize the background color to match your design.
+ */
+
+    ::-moz-selection {
+      background: #b3d4fc;
+      text-shadow: none;
+    }
+
+    ::selection {
+      background: #b3d4fc;
+      text-shadow: none;
+    }
+
+    /*
+ * A better looking default horizontal rule
+ */
+
+    hr {
+      display: block;
+      height: 1px;
+      border: 0;
+      border-top: 1px solid #ccc;
+      margin: 1em 0;
+      padding: 0;
+    }
+
+    /*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+    audio,
+    canvas,
+    iframe,
+    img,
+    svg,
+    video {
+      vertical-align: middle;
+    }
+
+    /*
+ * Remove default fieldset styles.
+ */
+
+    fieldset {
+      border: 0;
+      margin: 0;
+      padding: 0;
+    }
+
+    /*
+ * Allow only vertical resizing of textareas.
+ */
+
+    textarea {
+      resize: vertical;
+    }
+
+    /* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+
+    .browserupgrade {
+      margin: 0.2em 0;
+      background: #ccc;
+      color: #000;
+      padding: 0.2em 0;
+    }
+
+    /* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+    /*
+ * Hide visually and from screen readers
+ */
+
+    .hidden {
+      display: none !important;
+    }
+
+    /*
+ * Hide only visually, but have it available for screen readers:
+ * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ *
+ * 1. For long content, line feeds are not interpreted as spaces and small width
+ *    causes content to wrap 1 word per line:
+ *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+ */
+
+    .visuallyhidden {
+      border: 0;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+      white-space: nowrap;
+      /* 1 */
+    }
+
+    /*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+    .visuallyhidden.focusable:active,
+    .visuallyhidden.focusable:focus {
+      clip: auto;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      position: static;
+      width: auto;
+      white-space: inherit;
+    }
+
+    /*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+    .invisible {
+      visibility: hidden;
+    }
+
+    /*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+    .clearfix:before,
+    .clearfix:after {
+      content: " ";
+      /* 1 */
+      display: table;
+      /* 2 */
+    }
+
+    .clearfix:after {
+      clear: both;
+    }
+
+    /* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+    @media only screen and (min-width: 35em) {
+      /* Style adjustments for viewports that meet the condition */
+    }
+
+    @media print,
+    (-webkit-min-device-pixel-ratio: 1.25),
+    (min-resolution: 1.25dppx),
+    (min-resolution: 120dpi) {
+      /* Style adjustments for high resolution devices */
+    }
+
+    /* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   https://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+    @media print {
+
+      *,
+      *:before,
+      *:after {
+        background: transparent !important;
+        color: #000 !important;
+        /* Black prints faster */
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+      }
+
+      a,
+      a:visited {
+        text-decoration: underline;
+      }
+
+      a[href]:after {
+        content: " ("attr(href) ")";
+      }
+
+      abbr[title]:after {
+        content: " ("attr(title) ")";
+      }
+
+      /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+
+      a[href^="#"]:after,
+      a[href^="javascript:"]:after {
+        content: "";
+      }
+
+      pre {
+        white-space: pre-wrap !important;
+      }
+
+      pre,
+      blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+      }
+
+      /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+
+      thead {
+        display: table-header-group;
+      }
+
+      tr,
+      img {
+        page-break-inside: avoid;
+      }
+
+      p,
+      h2,
+      h3 {
+        orphans: 3;
+        widows: 3;
+      }
+
+      h2,
+      h3 {
+        page-break-after: avoid;
+      }
+    }
+
+    body {
+      margin: 20px;
+      font-family: 'Open Sans', sans-serif;
+      color: #222;
+      background: #fefefe;
+    }
+
+    #positive_result {
+      color: green;
+    }
+
+    #negative_result {
+      color: red;
+    }
+  </style>
 </head>
 
 <body>
@@ -24,27 +707,75 @@
 
   <ul>
     {% for line in report.stdout %}
-      <li>
-        <span id="positive_result">
-          {{ line }}
-        </span>
-      </li>
+    <li>
+      <span id="positive_result">
+        {{ line }}
+      </span>
+    </li>
     {% endfor %}
 
     {% for line in report.stderr %}
-      <li>
-        <span id="negative_result">
-          {{ line }}
-        </span>
-      </li>
+    <li>
+      <span id="negative_result">
+        {{ line }}
+      </span>
+    </li>
     {% endfor %}
   </ul>
 
-  <script src="js/vendor/modernizr-3.6.0.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <!--<script src="js/vendor/modernizr-3.6.0.min.js"></script>-->
+  <script>
+    /*! modernizr 3.6.0 (Custom Build) | MIT *
+ * https://modernizr.com/download/?-cssanimations-csscolumns-customelements-flexbox-history-picture-pointerevents-postmessage-sizes-srcset-webgl-websockets-webworkers-addtest-domprefixes-hasevent-mq-prefixedcssvalue-prefixes-setclasses-testallprops-testprop-teststyles !*/
+    !function (e, t, n) { function r(e, t) { return typeof e === t } function o() { var e, t, n, o, i, s, a; for (var l in C) if (C.hasOwnProperty(l)) { if (e = [], t = C[l], t.name && (e.push(t.name.toLowerCase()), t.options && t.options.aliases && t.options.aliases.length)) for (n = 0; n < t.options.aliases.length; n++)e.push(t.options.aliases[n].toLowerCase()); for (o = r(t.fn, "function") ? t.fn() : t.fn, i = 0; i < e.length; i++)s = e[i], a = s.split("."), 1 === a.length ? Modernizr[a[0]] = o : (!Modernizr[a[0]] || Modernizr[a[0]] instanceof Boolean || (Modernizr[a[0]] = new Boolean(Modernizr[a[0]])), Modernizr[a[0]][a[1]] = o), w.push((o ? "" : "no-") + a.join("-")) } } function i(e) { var t = S.className, n = Modernizr._config.classPrefix || ""; if (x && (t = t.baseVal), Modernizr._config.enableJSClass) { var r = new RegExp("(^|\\s)" + n + "no-js(\\s|$)"); t = t.replace(r, "$1" + n + "js$2") } Modernizr._config.enableClasses && (t += " " + n + e.join(" " + n), x ? S.className.baseVal = t : S.className = t) } function s(e, t) { if ("object" == typeof e) for (var n in e) P(e, n) && s(n, e[n]); else { e = e.toLowerCase(); var r = e.split("."), o = Modernizr[r[0]]; if (2 == r.length && (o = o[r[1]]), "undefined" != typeof o) return Modernizr; t = "function" == typeof t ? t() : t, 1 == r.length ? Modernizr[r[0]] = t : (!Modernizr[r[0]] || Modernizr[r[0]] instanceof Boolean || (Modernizr[r[0]] = new Boolean(Modernizr[r[0]])), Modernizr[r[0]][r[1]] = t), i([(t && 0 != t ? "" : "no-") + r.join("-")]), Modernizr._trigger(e, t) } return Modernizr } function a() { return "function" != typeof t.createElement ? t.createElement(arguments[0]) : x ? t.createElementNS.call(t, "http://www.w3.org/2000/svg", arguments[0]) : t.createElement.apply(t, arguments) } function l() { var e = t.body; return e || (e = a(x ? "svg" : "body"), e.fake = !0), e } function u(e, n, r, o) { var i, s, u, f, d = "modernizr", c = a("div"), p = l(); if (parseInt(r, 10)) for (; r--;)u = a("div"), u.id = o ? o[r] : d + (r + 1), c.appendChild(u); return i = a("style"), i.type = "text/css", i.id = "s" + d, (p.fake ? p : c).appendChild(i), p.appendChild(c), i.styleSheet ? i.styleSheet.cssText = e : i.appendChild(t.createTextNode(e)), c.id = d, p.fake && (p.style.background = "", p.style.overflow = "hidden", f = S.style.overflow, S.style.overflow = "hidden", S.appendChild(p)), s = n(c, e), p.fake ? (p.parentNode.removeChild(p), S.style.overflow = f, S.offsetHeight) : c.parentNode.removeChild(c), !!s } function f(e, t) { return !!~("" + e).indexOf(t) } function d(e) { return e.replace(/([A-Z])/g, function (e, t) { return "-" + t.toLowerCase() }).replace(/^ms-/, "-ms-") } function c(t, n, r) { var o; if ("getComputedStyle" in e) { o = getComputedStyle.call(e, t, n); var i = e.console; if (null !== o) r && (o = o.getPropertyValue(r)); else if (i) { var s = i.error ? "error" : "log"; i[s].call(i, "getComputedStyle returning null, its possible modernizr test results are inaccurate") } } else o = !n && t.currentStyle && t.currentStyle[r]; return o } function p(t, r) { var o = t.length; if ("CSS" in e && "supports" in e.CSS) { for (; o--;)if (e.CSS.supports(d(t[o]), r)) return !0; return !1 } if ("CSSSupportsRule" in e) { for (var i = []; o--;)i.push("(" + d(t[o]) + ":" + r + ")"); return i = i.join(" or "), u("@supports (" + i + ") { #modernizr { position: absolute; } }", function (e) { return "absolute" == c(e, null, "position") }) } return n } function m(e) { return e.replace(/([a-z])-([a-z])/g, function (e, t, n) { return t + n.toUpperCase() }).replace(/^-/, "") } function h(e, t, o, i) { function s() { u && (delete N.style, delete N.modElem) } if (i = r(i, "undefined") ? !1 : i, !r(o, "undefined")) { var l = p(e, o); if (!r(l, "undefined")) return l } for (var u, d, c, h, v, A = ["modernizr", "tspan", "samp"]; !N.style && A.length;)u = !0, N.modElem = a(A.shift()), N.style = N.modElem.style; for (c = e.length, d = 0; c > d; d++)if (h = e[d], v = N.style[h], f(h, "-") && (h = m(h)), N.style[h] !== n) { if (i || r(o, "undefined")) return s(), "pfx" == t ? h : !0; try { N.style[h] = o } catch (g) { } if (N.style[h] != v) return s(), "pfx" == t ? h : !0 } return s(), !1 } function v(e, t) { return function () { return e.apply(t, arguments) } } function A(e, t, n) { var o; for (var i in e) if (e[i] in t) return n === !1 ? e[i] : (o = t[e[i]], r(o, "function") ? v(o, n || t) : o); return !1 } function g(e, t, n, o, i) { var s = e.charAt(0).toUpperCase() + e.slice(1), a = (e + " " + O.join(s + " ") + s).split(" "); return r(t, "string") || r(t, "undefined") ? h(a, t, o, i) : (a = (e + " " + T.join(s + " ") + s).split(" "), A(a, t, n)) } function y(e, t, r) { return g(e, n, n, t, r) } var C = [], b = { _version: "3.6.0", _config: { classPrefix: "", enableClasses: !0, enableJSClass: !0, usePrefixes: !0 }, _q: [], on: function (e, t) { var n = this; setTimeout(function () { t(n[e]) }, 0) }, addTest: function (e, t, n) { C.push({ name: e, fn: t, options: n }) }, addAsyncTest: function (e) { C.push({ name: null, fn: e }) } }, Modernizr = function () { }; Modernizr.prototype = b, Modernizr = new Modernizr; var w = [], S = t.documentElement, x = "svg" === S.nodeName.toLowerCase(), _ = "Moz O ms Webkit", T = b._config.usePrefixes ? _.toLowerCase().split(" ") : []; b._domPrefixes = T; var E = b._config.usePrefixes ? " -webkit- -moz- -o- -ms- ".split(" ") : ["", ""]; b._prefixes = E; var P; !function () { var e = {}.hasOwnProperty; P = r(e, "undefined") || r(e.call, "undefined") ? function (e, t) { return t in e && r(e.constructor.prototype[t], "undefined") } : function (t, n) { return e.call(t, n) } }(), b._l = {}, b.on = function (e, t) { this._l[e] || (this._l[e] = []), this._l[e].push(t), Modernizr.hasOwnProperty(e) && setTimeout(function () { Modernizr._trigger(e, Modernizr[e]) }, 0) }, b._trigger = function (e, t) { if (this._l[e]) { var n = this._l[e]; setTimeout(function () { var e, r; for (e = 0; e < n.length; e++)(r = n[e])(t) }, 0), delete this._l[e] } }, Modernizr._q.push(function () { b.addTest = s }); var k = function () { function e(e, t) { var o; return e ? (t && "string" != typeof t || (t = a(t || "div")), e = "on" + e, o = e in t, !o && r && (t.setAttribute || (t = a("div")), t.setAttribute(e, ""), o = "function" == typeof t[e], t[e] !== n && (t[e] = n), t.removeAttribute(e)), o) : !1 } var r = !("onblur" in t.documentElement); return e }(); b.hasEvent = k; var z = function () { var t = e.matchMedia || e.msMatchMedia; return t ? function (e) { var n = t(e); return n && n.matches || !1 } : function (t) { var n = !1; return u("@media " + t + " { #modernizr { position: absolute; } }", function (t) { n = "absolute" == (e.getComputedStyle ? e.getComputedStyle(t, null) : t.currentStyle).position }), n } }(); b.mq = z; var B = function (e, t) { var n = !1, r = a("div"), o = r.style; if (e in o) { var i = T.length; for (o[e] = t, n = o[e]; i-- && !n;)o[e] = "-" + T[i] + "-" + t, n = o[e] } return "" === n && (n = !1), n }; b.prefixedCSSValue = B; var O = b._config.usePrefixes ? _.split(" ") : []; b._cssomPrefixes = O; var L = { elem: a("modernizr") }; Modernizr._q.push(function () { delete L.elem }); var N = { style: L.elem.style }; Modernizr._q.unshift(function () { delete N.style }), b.testAllProps = g, b.testAllProps = y; b.testProp = function (e, t, r) { return h([e], n, t, r) }, b.testStyles = u; Modernizr.addTest("customelements", "customElements" in e), Modernizr.addTest("history", function () { var t = navigator.userAgent; return -1 === t.indexOf("Android 2.") && -1 === t.indexOf("Android 4.0") || -1 === t.indexOf("Mobile Safari") || -1 !== t.indexOf("Chrome") || -1 !== t.indexOf("Windows Phone") || "file:" === location.protocol ? e.history && "pushState" in e.history : !1 }), Modernizr.addTest("pointerevents", function () { var e = !1, t = T.length; for (e = Modernizr.hasEvent("pointerdown"); t-- && !e;)k(T[t] + "pointerdown") && (e = !0); return e }), Modernizr.addTest("postmessage", "postMessage" in e), Modernizr.addTest("webgl", function () { var t = a("canvas"), n = "probablySupportsContext" in t ? "probablySupportsContext" : "supportsContext"; return n in t ? t[n]("webgl") || t[n]("experimental-webgl") : "WebGLRenderingContext" in e }); var R = !1; try { R = "WebSocket" in e && 2 === e.WebSocket.CLOSING } catch (j) { } Modernizr.addTest("websockets", R), Modernizr.addTest("cssanimations", y("animationName", "a", !0)), function () { Modernizr.addTest("csscolumns", function () { var e = !1, t = y("columnCount"); try { e = !!t, e && (e = new Boolean(e)) } catch (n) { } return e }); for (var e, t, n = ["Width", "Span", "Fill", "Gap", "Rule", "RuleColor", "RuleStyle", "RuleWidth", "BreakBefore", "BreakAfter", "BreakInside"], r = 0; r < n.length; r++)e = n[r].toLowerCase(), t = y("column" + n[r]), ("breakbefore" === e || "breakafter" === e || "breakinside" == e) && (t = t || y(n[r])), Modernizr.addTest("csscolumns." + e, t) }(), Modernizr.addTest("flexbox", y("flexBasis", "1px", !0)), Modernizr.addTest("picture", "HTMLPictureElement" in e), Modernizr.addAsyncTest(function () { var e, t, n, r = a("img"), o = "sizes" in r; !o && "srcset" in r ? (t = "data:image/gif;base64,R0lGODlhAgABAPAAAP///wAAACH5BAAAAAAALAAAAAACAAEAAAICBAoAOw==", e = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", n = function () { s("sizes", 2 == r.width) }, r.onload = n, r.onerror = n, r.setAttribute("sizes", "9px"), r.srcset = e + " 1w," + t + " 8w", r.src = e) : s("sizes", o) }), Modernizr.addTest("srcset", "srcset" in a("img")), Modernizr.addTest("webworkers", "Worker" in e), o(), i(w), delete b.addTest, delete b.addAsyncTest; for (var M = 0; M < Modernizr._q.length; M++)Modernizr._q[M](); e.Modernizr = Modernizr }(window, document);
+  </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
-  <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
+  <!--<script src="js/plugins.js"></script>-->
+  <script>
+  // Avoid `console` errors in browsers that lack a console.
+  (function() {
+  var method;
+  var noop = function () {};
+  var methods = [
+  'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+  'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+  'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+  'timeline', 'timelineEnd', 'timeStamp', 'trace', 'warn'
+  ];
+  var length = methods.length;
+  var console = (window.console = window.console || {});
+
+  while (length--) {
+  method = methods[length];
+
+  // Only stub undefined methods.
+  if (!console[method]) {
+  console[method] = noop;
+  }
+  }
+  }());
+
+  // Place any jQuery/helper plugins in here.
+  </script>
+
+  <!--<script src="js/main.js"></script>-->
+  <script>
+    var diffHtml = Diff2Html.getPrettyHtml(
+      '--- expected \n\
++++ got \n\
+@@ -1,4 +1,4 @@\n\
+-bacon\n\
++python\n\
+eggs\n\
+-ham\n\
++hamster\n\
+guido\n',
+      { inputFormat: 'diff', showFiles: false, matching: 'words', outputFormat: 'side-by-side' }
+    );
+    document.getElementById("destination-elem-id").innerHTML = diffHtml;
+  </script>
 </body>
 
 </html>

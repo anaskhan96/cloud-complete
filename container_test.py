@@ -72,18 +72,12 @@ def load_teams():
 
     return teams
 
-teams = load_teams()
-
 if len(sys.argv) == 3 and sys.argv[1] == '--team':
     team_id = sys.argv[2]
     if team_id in teams:
         teams = { team_id: teams[team_id] }
 
 test_script = get_test_script()
-
-reports = run_tests(teams, test_script)
-
-print('Done. Check \'container_reports\' folder')
 
 # -----------------------------------------------------------------------
 
@@ -92,24 +86,30 @@ env = Environment(loader = fs_loader)
 
 template = env.get_template('container_template.html')
 
-for team_id in reports.keys():
-    report = reports[team_id]
-    html_report = template.render(team_id=team_id, report=report)
-    encoded_report = html_report.encode("UTF-8")
+def container_generate(teams_str):
+   teams = json.loads(teams_str)
+   print('Running tests...')
+   reports = run_tests(teams, test_script)
 
-    # Inserting the report in the database
-    date = round(time.time(), 2)
-    report_document = {
-       'team_id': team_id,
-       'encoded_report': encoded_report,
-       'date': date
-    }
-    container_reports_collection.insert_one(report_document)
-    print('Container Report for team ' + team_id + ' has been updated in the database.')
+   response = []
 
-    filename = team_id + '.html'
-    path = os.path.join(REPORTS_DIR, filename)
+   for team_id in reports.keys():
+       report = reports[team_id]
+       html_report = template.render(team_id=team_id, report=report)
+       encoded_report = html_report.encode("UTF-8")
 
-    file = open(path, 'w') 
-    file.write(encoded_report)
-    file.close()
+       # Inserting the report in the database
+       date = round(time.time(), 2)
+       report_document = {
+          'team_id': team_id,
+          'encoded_report': encoded_report,
+          'date': date
+       }
+       container_reports_collection.insert_one(report_document)
+       print('Container Report for team ' + team_id + ' has been updated in the database.')
+       data_chunk = {
+            'team_id': team_id,
+            'link': '/ccbd/containerReports/' + team_id + '/' + str(date)
+       }
+       response.append(data_chunk)
+   return response

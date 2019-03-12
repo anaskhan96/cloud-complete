@@ -171,6 +171,60 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
     <script>hljs.initHighlightingOnLoad();</script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+        function generateContainerReport() {
+            let teamInput = document.getElementById('containerTeamInput');
+            if (teamInput.files.length == 0) {
+                swal("Wait a sec!", "Can't proceed unless you provide a teams.json", "error");
+                return
+            }
+            let pkeysInput = document.getElementById('containerPkeysInput');
+            if (pkeysInput.files.length == 0) {
+                swal("Wait a sec!", "Can't proceed unless you provide all private keys", "error");
+                return
+            }
+
+            let data = new FormData();
+            data.append('containerTeams', teamInput.files[0])
+            for(let i = 0; i < pkeysInput.files.length; i++) {
+                data.append('privateKeys[]', pkeysInput.files[i]);
+            }
+
+            let i = 0;
+            document.getElementById('gencontainerbtn').disabled = true;
+            let center = document.getElementById('containerCentr');
+            let p = document.createElement('p');
+            p.innerHTML = "Once the reports are generated, the page will contain new links. Please stay patient.";
+            center.appendChild(p);
+            let div = document.createElement('div');
+            div.setAttribute('class', 'loader');
+            center.appendChild(div); 
+
+            fetch('/ccbd/containerGenerate', {
+                method: 'POST',
+                body: data
+            }).then(response => response.json()).then(res => {
+                if (!res.success) {
+                    swal("Something went wrong!", "Check if the json file is correct, whether you have uploaded all the private keys, and try again.", "error"); 
+                } else {
+                    let data = res.data;
+                    for (let i = 0; i < data.length; i++) {
+                        let br = document.createElement('br');
+                        let button = document.createElement('button');
+                        button.setAttribute('onclick', "generateLink('" + data[i].link + "');");
+                        button.innerHTML = "View " + data[i].team_id + "'s report";
+                        let div = document.getElementById('container');
+                        div.appendChild(br);
+                        div.appendChild(br);
+                        div.appendChild(button);
+                    }
+                    swal("Generated!", "You can now view the reports.", "success");
+                    let divToDelete = document.getElementsByClassName('loader')[0];
+                    center.removeChild(divToDelete);
+                    center.removeChild(p);
+                    document.getElementById('gencontainerbtn').disabled = false; 
+                }
+            });
+        }
         function generateReport() {
             let input = document.getElementById('teaminput');
             if (input.files.length == 0) {
@@ -218,9 +272,10 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
                         let button = document.createElement('button');
                         button.setAttribute('onclick', "generateLink('" + data[i].link + "');");
                         button.innerHTML = "View " + data[i].team_id + "'s report";
-                        document.body.appendChild(br);
-                        document.body.appendChild(br);
-                        document.body.appendChild(button);
+                        let div = document.getElementById('rest');
+                        div.appendChild(br);
+                        div.appendChild(br);
+                        div.appendChild(button);
                     }
                     swal("Generated!", "You can now view the reports.", "success");
                     let divToDelete = document.getElementsByClassName('loader')[0];
@@ -254,15 +309,42 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
     <center>
         <h1>CCBD Evaluation Platform</h1>
     </center>
-    <h2>Upload <em>teams.json</em> file</h2>
-    <p>Example of a <em>teams.json</em> file is given below:</p>
-    <pre><code>{
+    <div id="rest">
+        <h2>REST API Testing</h2>
+        <h3>Upload <em>teams.json</em> file</h3>
+        <p>Example of a <em>teams.json</em> file is given below:</p>
+        <pre><code>{
     "CC_123_456_789": "127.0.0.1:8888"
 }</code></pre>
-    <input id="teaminput" type="file" name="teams" />
-    <button id="genbtn" onclick="generateReport();">Generate Report</button><br><br>
-    <center><button onclick="window.location.href='/ccbd/reports'">View All Reports</button></center>
-    <center id="centr"></center>
+        <input id="teaminput" type="file" name="teams" />
+        <button id="genbtn" onclick="generateReport();">Generate REST API Report</button><br><br>
+        <center><button onclick="window.location.href='/ccbd/reports'">View All REST API Reports</button></center>
+        <center id="centr"></center>
+    </div>
+    <div id="container">
+        <h2>Containerization Testing</h2>
+        <h3>Upload <em>teams.json</em> and <em>private key (.pem)</em> files</h3>
+        <p>Example of <em>teams.json</em> file is given below:</p>
+        <pre><code>{
+    "CC_123_456_789": {
+        "ip": "3.17.39.158",
+        "username": "ubuntu",
+        "private_key": "private-key.pem"
+    }
+}</code></pre>
+        <input id="containerTeamInput" type="file" name="containerTeams" /><br>
+        <p>Select all the private key files belonging to the respective teams <b>(make sure that the private key file
+                name
+                being uploaded and the name in teams.json is an exact match for each team)</b> and upload them below:
+        </p>
+        <input id="containerPkeysInput" type="file" name="privateKeys" multiple />
+        <button id="gencontainerbtn" onclick="generateContainerReport();">Generate Containerization
+            Report</button><br><br>
+        <center><button onclick="window.location.href='/ccbd/containerReports'">View All Containerization
+                Reports</button>
+        </center>
+        <center id="containerCentr"></center>
+    </div>
 </body>
 
 </html>
