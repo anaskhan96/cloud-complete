@@ -8,6 +8,7 @@ from test import generate
 client = MongoClient('mongodb://anask.xyz:27017')
 db = client["ccbd-reports"]
 reports_collection = db["reports"]
+container_reports_collection = db["container_reports"]
 
 app = Flask(__name__)
 app.config['BASIC_AUTH_USERNAME'] = 'ccbd-evaluator'
@@ -43,6 +44,19 @@ def all_reports():
         })
     return render_template('reports.html', items=items)
 
+@app.route('/ccbd/containerReports', methods=['GET'])
+@basic_auth.required
+def all_container_reports():
+    report_documents_cursor = container_reports_collection.find({})
+    items = []
+    for report in report_documents_cursor:
+        items.append({
+            'team': report['team_id'],
+            'link': request.path + '/' + report['team_id'] + '/' + str(report['date']),
+            'date': datetime.fromtimestamp(report['date']).strftime('%Y-%m-%d %H:%M:%S')
+        })
+    return render_template('reports.html', items=items)
+
 @app.route('/ccbd/reports/<team_id>', methods=['GET'])
 @app.route('/ccbd/reports/<team_id>/<date>', methods=['GET'])
 @basic_auth.required
@@ -61,6 +75,30 @@ def report(team_id, date=None):
         return render_template('reports.html', items=items)
 
     report_document = reports_collection.find_one({
+        'team_id': team_id,
+        'date': float(date)
+    })
+    encoded_report = report_document['encoded_report']
+    return render_template_string(encoded_report)
+
+@app.route('/ccbd/containerReports/<team_id>', methods=['GET'])
+@app.route('/ccbd/containerReports/<team_id>/<date>', methods=['GET'])
+@basic_auth.required
+def container_report(team_id, date=None):
+    if not date:
+        report_documents_cursor = container_reports_collection.find({
+            'team_id': team_id
+        })
+        items = []
+        for report in report_documents_cursor:
+            items.append({
+                'team': report['team_id'],
+                'link': request.path + '/' + report['team_id'] + '/' + str(report['date']),
+                'date': datetime.fromtimestamp(report['date']).strftime('%Y-%m-%d %H:%M:%S')
+            })
+        return render_template('reports.html', items=items)
+    
+    report_document = container_reports_collection.find_one({
         'team_id': team_id,
         'date': float(date)
     })
