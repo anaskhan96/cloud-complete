@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from datetime import datetime
 from test import generate
 from container_test import container_generate
+from container_test import student_generate
 from werkzeug.utils import secure_filename
 import os
 
@@ -127,6 +128,25 @@ def container_report(team_id, date=None):
     })
     encoded_report = report_document['encoded_report']
     return render_template_string(encoded_report)
+
+@app.route('/ccbd/studentViewing', methods=['GET'])
+def student_view():
+    return render_template('studentView.html')
+
+@app.route('/ccbd/studentViewing/<ip>/<username>', methods=['POST'])
+def student_generate_report(ip, username):
+    private_key_file = request.files['privateKey']
+    private_key_file.save(secure_filename(private_key_file.filename))
+    response = {}
+    try:
+        res = student_generate(ip, username, secure_filename(private_key_file.filename))
+        response['success'] = True
+        response['data'] = res
+    except:
+        response['success'] = False
+    
+    os.remove(secure_filename(private_key_file.filename))
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run(port=8080)
