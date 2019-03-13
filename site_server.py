@@ -66,7 +66,7 @@ def all_reports():
             'link': request.path + '/' + report['team_id'] + '/' + str(report['date']),
             'date': datetime.fromtimestamp(report['date']).strftime('%Y-%m-%d %H:%M:%S')
         })
-    return render_template('reports.html', items=items)
+    return render_template('reports.html', items=items, test="rest")
 
 @app.route('/ccbd/containerReports', methods=['GET'])
 @basic_auth.required
@@ -79,7 +79,7 @@ def all_container_reports():
             'link': request.path + '/' + report['team_id'] + '/' + str(report['date']),
             'date': datetime.fromtimestamp(report['date']).strftime('%Y-%m-%d %H:%M:%S')
         })
-    return render_template('reports.html', items=items)
+    return render_template('reports.html', items=items, test="container")
 
 @app.route('/ccbd/reports/<team_id>', methods=['GET'])
 @app.route('/ccbd/reports/<team_id>/<date>', methods=['GET'])
@@ -96,7 +96,7 @@ def report(team_id, date=None):
                 'link': request.path + '/' + report['team_id'] + '/' + str(report['date']),
                 'date': datetime.fromtimestamp(report['date']).strftime('%Y-%m-%d %H:%M:%S')
             })
-        return render_template('reports.html', items=items)
+        return render_template('reports.html', items=items, test="rest")
 
     report_document = reports_collection.find_one({
         'team_id': team_id,
@@ -120,7 +120,7 @@ def container_report(team_id, date=None):
                 'link': request.path + '/' + report['team_id'] + '/' + str(report['date']),
                 'date': datetime.fromtimestamp(report['date']).strftime('%Y-%m-%d %H:%M:%S')
             })
-        return render_template('reports.html', items=items)
+        return render_template('reports.html', items=items, test="container")
     
     report_document = container_reports_collection.find_one({
         'team_id': team_id,

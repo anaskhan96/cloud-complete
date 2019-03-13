@@ -66,9 +66,21 @@
         }
     </style>
     <script>
-        function filter() {
+        function filter(test) {
             let teamId = document.getElementById('teamId').value;
-            window.location.href = "/ccbd/reports/" + teamId;
+            if (test == "rest") {
+                window.location.href = "/ccbd/reports/" + teamId;
+            } else {
+                window.location.href = "/ccbd/containerReports/" + teamId;
+            }
+        }
+
+        function showAll(test) {
+            if (test == "rest") {
+                window.location.href = "/ccbd/reports";
+            } else {
+                window.location.href = "/ccbd/containerReports";
+            }
         }
     </script>
 </head>
@@ -76,8 +88,8 @@
 <body>
     <center>
         <input id="teamId" type="text" placeholder="Exact team ID">
-        <button onclick="filter();">Filter</button>
-        <button onclick="window.location.href='/ccbd/reports'">Show All</button>
+        <button onclick="filter('{{ test  }}');">Filter</button>
+        <button onclick="showAll('{{ test }}')">Show All</button>
         <button onclick="window.location.href='/ccbd'">Go to Home</button>
     </center>
     <table>
