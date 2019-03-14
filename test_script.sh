@@ -106,7 +106,8 @@ function test_container_communication() {
 
     rm -f logs
     touch logs
-    sudo tcpflow -p -c -i lo port $USERS_PORT > logs 2> /dev/null &
+    sudo timeout 120 tcpflow -p -c -i lo port $USERS_PORT >> logs 2> /dev/null &
+    sudo timeout 120 tcpflow -p -c -i eth0 port $USERS_PORT >> logs 2> /dev/null &
     sleep 5
 
     # add act
