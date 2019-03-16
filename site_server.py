@@ -127,7 +127,7 @@ def container_report(team_id, date=None):
         'date': float(date)
     })
     encoded_report = report_document['encoded_report']
-    return render_template_string(encoded_report)
+    return render_template_string(encoded_report.decode('utf-8'))
 
 @app.route('/ccbd/studentViewing', methods=['GET'])
 def student_view():
