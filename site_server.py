@@ -8,6 +8,10 @@ from container_test import container_generate
 from container_test import student_generate
 from werkzeug.utils import secure_filename
 import os
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 client = MongoClient('mongodb://anask.xyz:27017')
 db = client["ccbd-reports"]
@@ -127,7 +131,7 @@ def container_report(team_id, date=None):
         'date': float(date)
     })
     encoded_report = report_document['encoded_report']
-    return render_template_string(encoded_report.decode('utf-8'))
+    return render_template_string(encoded_report)
 
 @app.route('/ccbd/studentViewing', methods=['GET'])
 def student_view():
