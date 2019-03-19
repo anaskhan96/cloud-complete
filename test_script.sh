@@ -49,9 +49,9 @@ function test_users_env_var() {
     output=$(sudo docker exec $USERS_CID printenv TEAM_ID)
     len=${#output}
     if [ $len -gt 1 ]; then
-        echo "Environment varibale TEAM_ID is defined in 'users' container as '$output'"
+        echo "Environment variable TEAM_ID is defined in 'users' container as '$output'"
     else
-        echo "Environment varibale TEAM_ID isn't defined in 'users' container" >&2
+        echo "Environment variable TEAM_ID isn't defined in 'users' container" >&2
         exit
     fi
 }
@@ -60,9 +60,9 @@ function test_acts_env_var() {
     output=$(sudo docker exec $ACTS_CID printenv TEAM_ID)
     len=${#output}
     if [ $len -gt 1 ]; then
-        echo "Environment varibale TEAM_ID is defined in 'acts' container as '$output'"
+        echo "Environment variable TEAM_ID is defined in 'acts' container as '$output'"
     else
-        echo "Environment varibale TEAM_ID isn't defined in 'acts' container" >&2
+        echo "Environment variable TEAM_ID isn't defined in 'acts' container" >&2
         exit
     fi
 }
