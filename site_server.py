@@ -17,6 +17,7 @@ client = MongoClient('mongodb://anask.xyz:27017')
 db = client["ccbd-reports"]
 reports_collection = db["reports"]
 container_reports_collection = db["container_reports"]
+sample_acts_collection = db["sample_acts"]
 
 app = Flask(__name__)
 app.config['BASIC_AUTH_USERNAME'] = 'ccbd-evaluator'
@@ -150,6 +151,22 @@ def student_generate_report(ip, username):
         response['success'] = False
     
     os.remove(secure_filename(private_key_file.filename))
+    return jsonify(response)
+
+@app.route('/ccbd/sample/acts', methods=['POST'])
+def upload_sample_act():
+    act = request.get_json()
+    sample_acts_collection.insert_one(act)
+    return jsonify({"success": True})
+
+
+@app.route('/ccbd/sample/acts', methods=['GET'])
+def sample_acts():
+    response = []
+    sample_acts_cursor = sample_acts_collection.find({})
+    for sample_act in sample_acts_cursor:
+        sample_act['_id'] = None
+        response.append(sample_act)
     return jsonify(response)
 
 if __name__ == '__main__':
