@@ -289,7 +289,7 @@ def lb_generate(teams_str):
        print('Load balancing report for team ' + team_id + ' has been updated in the database.')
        data_chunk = {
           'team_id': team_id,
-          'link': '/ccbd/lbReports' + team_id + '/' + str(date)
+          'link': '/ccbd/lbReports/' + team_id + '/' + str(date)
        }
        response.append(data_chunk)
    return response

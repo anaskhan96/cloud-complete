@@ -80,6 +80,8 @@ def lb_teamsupload():
     for private_key_file in private_key_files:
         os.remove(secure_filename(private_key_file.filename))
 
+    return jsonify(response)
+
 @app.route('/ccbd/reports', methods=['GET'])
 @basic_auth.required
 def all_reports():
