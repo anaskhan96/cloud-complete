@@ -70,16 +70,20 @@
             let teamId = document.getElementById('teamId').value;
             if (test == "rest") {
                 window.location.href = "/ccbd/reports/" + teamId;
-            } else {
+            } else if (test == "container") {
                 window.location.href = "/ccbd/containerReports/" + teamId;
+            } else {
+                window.location.href = "/ccbd/lbReports" + teamId;
             }
         }
 
         function showAll(test) {
             if (test == "rest") {
                 window.location.href = "/ccbd/reports";
-            } else {
+            } else if (test == "container") {
                 window.location.href = "/ccbd/containerReports";
+            } else {
+                window.location.href = "/ccbd/lbReports";
             }
         }
     </script>
