@@ -1,0 +1,131 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Cloud Computing Assignment 2</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <h2>16CS352: Cloud Computing – Assignment 4</h2>
+
+  Evaluation for <code>CC_123_456_789</code><br>
+
+  Load Balancer IP address: <code>http://lb-1221751739.us-east-2.elb.amazonaws.com</code><br>
+  Acts IP address: <code>http://3.16.38.238</code><br>
+  Users IP address: <code>http://18.224.170.138</code><br>
+  Acts EC2 Username: <code>ubuntu</code><br>
+  Users EC2 Username: <code>ubuntu</code><br>
+
+  <ul>
+    
+      <li>
+        <span id="positive_result">
+          Acts microservice deployed at Acts IP http://3.16.38.238
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          Users microservice deployed at Users IP http://18.224.170.138
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          Able to reset HTTP requests counter on Acts microservice
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          Able to reset HTTP requests counter on Users microservice
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          Made 4 GET requests to http://lb-1221751739.us-east-2.elb.amazonaws.com/api/v1/users
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          Made 4 GET requests to http://lb-1221751739.us-east-2.elb.amazonaws.com/api/v1/categories
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          Request to Acts IP http://3.16.38.238/api/v1/_count returned 4
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          Request to Users IP http://18.224.170.138/api/v1/_count returned 4
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          dockerd is running with PID 4858 on Acts instance
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          Image 'acts' is running with container ID 26fe355cf0c1 on Acts instance
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          Acts container is listening on port 80
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          dockerd is running with PID 2163 on Users instance
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          Image 'users' is running with container ID 27c0f5d95612 on Users instance
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          Users container is listening on port 80
+        </span>
+      </li>
+    
+      <li>
+        <span id="positive_result">
+          Acts microservice did make GET request to users microservice for list of users
+        </span>
+      </li>
+    
+
+    
+  </ul>
+
+  <script src="js/vendor/modernizr-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
