@@ -293,3 +293,24 @@ def lb_generate(teams_str):
        }
        response.append(data_chunk)
    return response
+
+def lb_student_generate(lbDns, actsIp, actsUsername, actsPkey, usersIp, usersUsername, usersPkey):
+   teams = {}
+   teams['TEAM_ID_NOT_APPLICABLE'] = {
+      'lb_dns': lbDns,
+      'acts_ip': actsIp,
+      'users_ip': usersIp,
+      'acts_username': actsUsername,
+      'users_username': usersUsername,
+      'acts_private_key': actsPkey,
+      'users_private_key': usersPkey
+   }
+   print('Generating load balancer report for student')
+
+   reports = run_tests(teams)
+   report = reports['TEAM_ID_NOT_APPLICABLE']
+   html_report = template.render(team_id='TEAM_ID_NOT_APPLICABLE', report=report)
+   encoded_report = html_report.encode("UTF-8")
+   print('Load balancer report generation for student complete')
+
+   return encoded_report

@@ -7,6 +7,7 @@ from test import generate
 from container_test import container_generate
 from lb_test import lb_generate
 from container_test import student_generate
+from lb_test import lb_student_generate
 from werkzeug.utils import secure_filename
 import os
 import sys
@@ -210,6 +211,24 @@ def student_generate_report(ip, username):
         response['success'] = False
     
     os.remove(secure_filename(private_key_file.filename))
+    return jsonify(response)
+
+@app.route('/ccbd/studentViewing/<lbDns>/<actsIp>/<actsUsername>/<usersIp>/<usersUsername>', methods=['POST'])
+def student_generate_lb_report(lbDns, actsIp, actsUsername, usersIp, usersUsername):
+    acts_private_key_file = request.files['actsPrivateKey']
+    acts_private_key_file.save(secure_filename(acts_private_key_file.filename))
+    users_private_key_file = request.files['usersPrivateKey']
+    users_private_key_file.save(secure_filename(users_private_key_file.filename))
+    response = {}
+    try:
+        res = lb_student_generate(lbDns, actsIp, actsUsername, secure_filename(acts_private_key_file.filename), usersIp, usersUsername, secure_filename(users_private_key_file.filename))
+        response['success'] = True
+        response['data'] = res
+    except:
+        response['success'] = False
+
+    os.remove(secure_filename(acts_private_key_file.filename))
+    os.remove(secure_filename(users_private_key_file.filename))
     return jsonify(response)
 
 @app.route('/ccbd/sample/acts', methods=['POST'])

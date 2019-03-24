@@ -205,6 +205,39 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
             });
         }
 
+        function generateLbReport() {
+            let lbDns = document.getElementById('lbDnsInput').value;
+            let actsIp = document.getElementById('lbActsIpInput').value;
+            let usersIp = document.getElementById('lbUsersIpInput').value;
+            let actsUsername = document.getElementById('lbActsUsernameInput').value;
+            let usersUsername = document.getElementById('lbUsersUsernameInput').value;
+            let actsPkeyInput = document.getElementById('lbActsPkeyInput');
+            let usersPkeyInput = document.getElementById('lbUsersPkeyInput');
+
+            if (lbDns == "" || actsIp == "" || usersIp == "" || actsUsername == "" || usersUsername == "" || actsPkeyInput.files.length == 0 || usersPkeyInput.files.length == 0) {
+                swal("Wait a sec!", "None of the inputs are allowed to be empty", "error");
+                return
+            }
+
+            let data = new FormData();
+            data.append('actsPrivateKey', actsPkeyInput.files[0]);
+            data.append('usersPrivateKey', usersPkeyInput.files[0]);
+
+            fetch('/ccbd/studentViewing/' + lbDns + '/' + actsIp + '/' + actsUsername + '/' + usersIp + '/' + usersUsername, {
+                method: 'POST',
+                body: data
+            }).then(response => response.json()).then(res => {
+                if (!res.success) {
+                    swal("Something went wrong!", "Check if the credentials are correct, and try again.", "error");
+                } else {
+                    swal("Generated!", "You will be redirected to the report.", "success");
+                    let data = res.data;
+                    document.write(data);
+
+                }
+            });
+        }
+
         function generateLink(link) {
             let a = document.createElement('a');
             a.setAttribute('href', link);
@@ -225,6 +258,18 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
         <p>Upload your private key file: </p><input type="file" id="privateKeyInput" name="privateKey" /><br><br>
         <center><button id="gencontainerbtn" onclick="generateContainerReport();">Generate Containerization
                 Report</button></center>
+    </div>
+    <div id="lb">
+        <h2>View Load Balancer Reports</h2>
+        <p>Enter your load balancer DNS: </p><input type="text" id="lbDnsInput" /><br>
+        <p>Enter your `acts` IP: </p><input type="text" id="lbActsIpInput" /><br>
+        <p>Enter your `acts` username: </p><input type="text" id="lbActsUsernameInput" /><br>
+        <p>Upload your `acts` private key file: </p><input type="file" id="lbActsPkeyInput" name="privateKey" /><br>
+        <p>Enter your `users` IP: </p><input type="text" id="lbUsersIpInput" /><br>
+        <p>Enter your `users` username: </p><input type="text" id="lbUsersUsernameInput" /><br>
+        <p>Upload your `users` private key file: </p><input type="file" id="lbUsersPkeyInput"
+            name="privateKey" /><br><br>
+        <center><button id="genlbbtn" onclick="generateLbReport();">Generate Load Balancer Report</button></center>
     </div>
 </body>
 
