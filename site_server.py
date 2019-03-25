@@ -59,7 +59,10 @@ def container_teamsupload():
         response['success'] = False
     
     for private_key_file in private_key_files:
-        os.remove(secure_filename(private_key_file.filename))
+        try:
+            os.remove(secure_filename(private_key_file.filename))
+        except:
+            continue
     
     return jsonify(response)
 
@@ -79,7 +82,10 @@ def lb_teamsupload():
         response['success'] = False
     
     for private_key_file in private_key_files:
-        os.remove(secure_filename(private_key_file.filename))
+        try:
+            os.remove(secure_filename(private_key_file.filename))
+        except:
+            continue
 
     return jsonify(response)
 
@@ -210,7 +216,10 @@ def student_generate_report(ip, username):
     except:
         response['success'] = False
     
-    os.remove(secure_filename(private_key_file.filename))
+    try:
+        os.remove(secure_filename(private_key_file.filename))
+    except:
+        pass
     return jsonify(response)
 
 @app.route('/ccbd/studentViewing/<lbDns>/<actsIp>/<actsUsername>/<usersIp>/<usersUsername>', methods=['POST'])
@@ -227,8 +236,11 @@ def student_generate_lb_report(lbDns, actsIp, actsUsername, usersIp, usersUserna
     except:
         response['success'] = False
 
-    os.remove(secure_filename(acts_private_key_file.filename))
-    os.remove(secure_filename(users_private_key_file.filename))
+    try:
+        os.remove(secure_filename(acts_private_key_file.filename))
+        os.remove(secure_filename(users_private_key_file.filename))
+    except:
+        pass
     return jsonify(response)
 
 @app.route('/ccbd/sample/acts', methods=['POST'])
