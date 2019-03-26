@@ -705,7 +705,7 @@
   IP address: <code>{{ report.public_ip }}</code><br>
   Username: <code>{{ report.username }}</code><br>
 
-  <ul>
+  <ol>
     {% for line in report.stdout %}
     <li>
       <span id="positive_result">
@@ -721,7 +721,7 @@
       </span>
     </li>
     {% endfor %}
-  </ul>
+  </ol>
 
   <!--<script src="js/vendor/modernizr-3.6.0.min.js"></script>-->
   <script>

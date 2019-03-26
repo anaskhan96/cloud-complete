@@ -673,7 +673,7 @@ body {
   Acts EC2 Username: <code>{{ report.acts_username }}</code><br>
   Users EC2 Username: <code>{{ report.users_username }}</code><br>
 
-  <ul>
+  <ol>
     {% for line in report.stdout %}
       <li>
         <span id="positive_result">
@@ -689,7 +689,7 @@ body {
         </span>
       </li>
     {% endfor %}
-  </ul>
+  </ol>
 
   <!--<script src="js/vendor/modernizr-3.6.0.min.js"></script>-->
   <script>
