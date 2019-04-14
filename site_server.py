@@ -243,21 +243,5 @@ def student_generate_lb_report(lbDns, actsIp, actsUsername, usersIp, usersUserna
         pass
     return jsonify(response)
 
-@app.route('/ccbd/sample/acts', methods=['POST'])
-def upload_sample_act():
-    act = request.get_json()
-    sample_acts_collection.insert_one(act)
-    return jsonify({"success": True})
-
-
-@app.route('/ccbd/sample/acts', methods=['GET'])
-def sample_acts():
-    response = []
-    sample_acts_cursor = sample_acts_collection.find({})
-    for sample_act in sample_acts_cursor:
-        sample_act['_id'] = None
-        response.append(sample_act)
-    return jsonify(response)
-
 if __name__ == '__main__':
     app.run(port=8080)
