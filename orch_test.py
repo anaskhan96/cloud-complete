@@ -4,9 +4,14 @@ import json
 from jinja2 import Environment, FileSystemLoader
 import time
 import requests
+from pymongo import MongoClient
+import time
 
-TEAMS_FILE = 'teams.json'
-REPORTS_DIR = 'reports'
+TEAMS_FILE = 'orch_teams.json'
+REPORTS_DIR = 'orch_reports'
+client = MongoClient('mongodb://anask.xyz:27017')
+db = client['ccbd-reports']
+orch_reports_collection = db['orch_reports']
 
 def block_print():
     sys.stdout = open(os.devnull, 'w')
@@ -225,33 +230,60 @@ def load_teams():
 
     return teams
 
-teams = load_teams()
-
 if len(sys.argv) == 3 and sys.argv[1] == '--team':
     team_id = sys.argv[2]
     if team_id in teams:
         teams = { team_id: teams[team_id] }
-
-reports = run_tests(teams)
-
-print('Done. Check \'reports\' folder')
 
 # -----------------------------------------------------------------------
 
 fs_loader = FileSystemLoader('.')
 env = Environment(loader = fs_loader)
 
-template = env.get_template('template.html')
+template = env.get_template('orch_template.html')
 
-for team_id in reports.keys():
-    report = reports[team_id]
-    html_report = template.render(team_id=team_id, report=report)
-    encoded_report = html_report.encode("UTF-8")
+def orch_generate(teans_str):
+   teams = json.loads(teans_str)
+   print('Running tests...')
+   reports = run_tests(teams)
 
-    filename = team_id + '.html'
-    path = os.path.join(REPORTS_DIR, filename)
-
-    file = open(path, 'w') 
-    file.write(encoded_report)
-    file.close()
+   response = []
    
+   for team_id in reports.keys():
+       report = reports[team_id]
+       html_report = template.render(team_id=team_id, report=report)
+       encoded_report = html_report.encode("UTF-8")
+
+       # Inserting the report in the database
+       date = round(time.time(), 2)
+       report_document = {
+          'team_id': team_id,
+          'encoded_report': encoded_report,
+          'date': date
+       }
+       orch_reports_collection.insert_one(report_document)
+       print('Orch report for team ' + team_id + ' has been updated in the database.')
+       data_chunk = {
+          'team_id': team_id,
+          'link': '/ccbd/orchReports/' + team_id + '/' + str(date)
+       }
+       response.append(data_chunk)
+   return response
+
+def orch_student_generate(selfielessIp, actsIp, actsUsername, actsPkey):
+   teams = {}
+   teams['TEAM_ID_NOT_APPLICABLE'] = {
+      'selfieless_ip': selfielessIp,
+      'acts_ip': actsIp,
+      'acts_username': actsUsername,
+      'acts_private_key': actsPkey
+   }
+   print('Generating orchestration report for student')
+
+   reports = run_tests(teams)
+   report = reports['TEAM_ID_NOT_APPLICABLE']
+   html_report = template.render(team_id='TEAM_ID_NOT_APPLICABLE', report=report)
+   encoded_report = html_report.encode("UTF-8")
+   print('Orchestration report generation for student complete')
+
+   return encoded_report
