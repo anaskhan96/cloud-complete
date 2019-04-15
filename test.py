@@ -365,3 +365,16 @@ def generate(teams_str):
         }
         response.append(data_chunk)
     return response
+
+def student_rest_generate(ip):
+    teams = {
+        "TEAM_ID_NOT_APPLICABLE": ip
+    }
+    print('Generating REST report for student')
+    reports = run_tests(teams)
+    response = []
+    report = reports['TEAM_ID_NOT_APPLICABLE']
+    html_report = template.render(team_id='TEAM_ID_NOT_APPLICABLE', report=report)
+    encoded_report = html_report.encode("UTF-8")
+    print('REST student report generation complete')
+    return encoded_report

@@ -171,6 +171,30 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
     <script>hljs.initHighlightingOnLoad();</script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+        function generateRestReport() {
+            let ip = document.getElementById('restIpInput').value;
+            if (ip == "") {
+                swal("Wait a sec!", "IP can't be empty", "error");
+                return;
+            }
+            let center = document.getElementById('restCentr');
+            let p = document.createElement('p');
+            p.innerHTML = "Once the reports are generated, the page will contain new links. Please stay patient.";
+            center.appendChild(p);
+            let div = document.createElement('div');
+            div.setAttribute('class', 'loader');
+            center.appendChild(div);
+            fetch('/ccbd/studentViewing/' + ip).then(response => response.json()).then(res => {
+                if (!res.success) {
+                    swal("Something went wrong!", "Check if the IP is correct, and try again.", "error");
+                } else {
+                    swal("Generated!", "You will be redirected to the report.", "success");
+                    let data = res.data;
+                    document.write(data);
+                }
+            });
+        }
+
         function generateContainerReport() {
             let ip = document.getElementById('ipInput').value;
             if (ip == "") {
@@ -300,6 +324,13 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
     <center>
         <h1>Cloud Computing Student Report Viewing Platform</h1>
     </center>
+    <div id="rest">
+        <h2>View REST API Reports</h2>
+        <p>Enter your IP: </p><input type="text" id="restIpInput" /><br><br>
+        <center id="restCentr"><button id="genrestbtn" onclick="generateRestReport();">Generate
+                REST API
+                Report</button></center>
+    </div>
     <div id="container">
         <h2>View Containerization Reports</h2>
         <p>Enter your IP: </p><input type="text" id="ipInput" /><br>

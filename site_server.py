@@ -7,6 +7,7 @@ from test import generate
 from container_test import container_generate
 from lb_test import lb_generate
 from orch_test import orch_generate
+from test import student_rest_generate
 from container_test import student_generate
 from lb_test import lb_student_generate
 from orch_test import orch_student_generate
@@ -264,6 +265,18 @@ def orch_report(team_id, date=None):
 @app.route('/ccbd/studentViewing', methods=['GET'])
 def student_view():
     return render_template('studentView.html')
+
+@app.route('/ccbd/studentViewing/<ip>', methods=['GET'])
+def student_generate_rest_report(ip):
+    response = {}
+    try:
+        res = student_rest_generate(ip)
+        response['success'] = True
+        response['data'] = res
+    except:
+        response['success'] = False
+
+    return jsonify(response)
 
 @app.route('/ccbd/studentViewing/<ip>/<username>', methods=['POST'])
 def student_generate_report(ip, username):
