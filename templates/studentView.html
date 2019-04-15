@@ -189,6 +189,13 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
             }
             let data = new FormData();
             data.append('privateKey', privateKeyInput.files[0]);
+            let center = document.getElementById('containerCentr');
+            let p = document.createElement('p');
+            p.innerHTML = "Once the reports are generated, the page will contain new links. Please stay patient.";
+            center.appendChild(p);
+            let div = document.createElement('div');
+            div.setAttribute('class', 'loader');
+            center.appendChild(div);
 
             fetch('/ccbd/studentViewing/' + ip + '/' + username, {
                 method: 'POST',
@@ -222,6 +229,13 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
             let data = new FormData();
             data.append('actsPrivateKey', actsPkeyInput.files[0]);
             data.append('usersPrivateKey', usersPkeyInput.files[0]);
+            let center = document.getElementById('lbCentr');
+            let p = document.createElement('p');
+            p.innerHTML = "Once the reports are generated, the page will contain new links. Please stay patient.";
+            center.appendChild(p);
+            let div = document.createElement('div');
+            div.setAttribute('class', 'loader');
+            center.appendChild(div);
 
             fetch('/ccbd/studentViewing/' + lbDns + '/' + actsIp + '/' + actsUsername + '/' + usersIp + '/' + usersUsername, {
                 method: 'POST',
@@ -234,6 +248,41 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
                     let data = res.data;
                     document.write(data);
 
+                }
+            });
+        }
+
+        function generateOrchReport() {
+            let orchSelfieLessActsIp = document.getElementById('orchSelfieLessActsIpInput').value;
+            let orchActsIp = document.getElementById('orchActsIpInput').value;
+            let orchActsUsername = document.getElementById('orchActsUsernameInput').value;
+            let orchActsPkeyInput = document.getElementById('orchActsPkeyInput');
+
+            if (orchSelfieLessActsIp == "" || orchActsIp == "" || orchActsUsername == "" || orchActsPkeyInput.files.length == 0) {
+                swal("Wait a sec!", "None of the inputs are allowed to be empty", "error");
+                return
+            }
+
+            let data = new FormData();
+            data.append('actsPrivateKey', actsPkeyInput.files[0]);
+            let center = document.getElementById('orchCentr');
+            let p = document.getElementById('p');
+            p.innerHTML = "Once the reports are generated, the page will contain new links. Please stay patient, orchestration reports specially take a few minutes.";
+            center.appendChild(p);
+            let div = document.createElement('div');
+            div.setAttribute('class', 'loader');
+            center.appendChild(div);
+
+            fetch('/ccbd/studentViewing/' + orchSelfieLessActsIp + '/' + orchActsIp + '/' + orchActsUsername, {
+                method: 'POST',
+                body: data
+            }).then(response => response.json()).then(res => {
+                if (!res.success) {
+                    swal("Something went wrong!", "Check if the credentials are correct, and try again.", "error");
+                } else {
+                    swal("Generated!", "You will be redirected to the report.", "success");
+                    let data = res.data;
+                    document.write(data);
                 }
             });
         }
@@ -256,7 +305,8 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
         <p>Enter your IP: </p><input type="text" id="ipInput" /><br>
         <p>Enter your username (on the VM): </p><input type="text" id="usernameInput" /><br>
         <p>Upload your private key file: </p><input type="file" id="privateKeyInput" name="privateKey" /><br><br>
-        <center><button id="gencontainerbtn" onclick="generateContainerReport();">Generate Containerization
+        <center id="containerCentr"><button id="gencontainerbtn" onclick="generateContainerReport();">Generate
+                Containerization
                 Report</button></center>
     </div>
     <div id="lb">
@@ -269,7 +319,17 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
         <p>Enter your `users` username: </p><input type="text" id="lbUsersUsernameInput" /><br>
         <p>Upload your `users` private key file: </p><input type="file" id="lbUsersPkeyInput"
             name="privateKey" /><br><br>
-        <center><button id="genlbbtn" onclick="generateLbReport();">Generate Load Balancer Report</button></center>
+        <center id="lbCentr"><button id="genlbbtn" onclick="generateLbReport();">Generate Load Balancer Report</button>
+        </center>
+    </div>
+    <div id="orch">
+        <h2>View Orchestration Reports</h2>
+        <p>Enter your `selfielessacts` IP: </p><input type="text" id="orchSelfieLessActsIpInput" /><br>
+        <p>Enter your `acts` IP: </p><input type="text" id="orchActsIpInput" /><br>
+        <p>Enter your `acts` username: </p><input type="text" id="orchActsUsernameInput" /><br>
+        <p>Upload your `acts` private key file: </p><input type="file" id="orchActsPkeyInput" name="privateKey" /><br>
+        <center id="orchCentr"><button id="genorchbtn" onclick="generateOrchReport();">Generate Orchestration
+                Report</button></center>
     </div>
 </body>
 

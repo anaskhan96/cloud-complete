@@ -72,8 +72,10 @@
                 window.location.href = "/ccbd/reports/" + teamId;
             } else if (test == "container") {
                 window.location.href = "/ccbd/containerReports/" + teamId;
-            } else {
+            } else if (test == "lb") {
                 window.location.href = "/ccbd/lbReports" + teamId;
+            } else {
+                window.location.href = "/ccbd/orchReports" + teamId;
             }
         }
 
@@ -82,8 +84,10 @@
                 window.location.href = "/ccbd/reports";
             } else if (test == "container") {
                 window.location.href = "/ccbd/containerReports";
-            } else {
+            } else if (test == "lb") {
                 window.location.href = "/ccbd/lbReports";
+            } else {
+                window.location.href = "/ccbd/orchReports";
             }
         }
     </script>
