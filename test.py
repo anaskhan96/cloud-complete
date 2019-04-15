@@ -248,7 +248,7 @@ def run_tests_single(tests, team_id, public_ip):
     report['test_results'] = test_results
     return report
 
-def run_tests(tests, teams):
+def run_tests(teams):
     reports = {}
 
     for (team_id, public_ip) in teams.items():
@@ -258,6 +258,7 @@ def run_tests(tests, teams):
 
         test_results = []
 
+        tests = load_tests()
         for t in tests:
             test_title = t['title']
             test = t['test']
@@ -293,7 +294,7 @@ def run_tests(tests, teams):
     
     return reports
 
-tests = load_tests()
+#tests = load_tests()
 #pprint(tests)
 fs_loader = FileSystemLoader('.')
 env = Environment(loader = fs_loader)
@@ -342,7 +343,7 @@ if __name__ == '__main__':
 def generate(teams_str):
     teams = json.loads(teams_str)
     print("Running tests...")
-    reports = run_tests(tests, teams)
+    reports = run_tests(teams)
 
     response = []
     for team_id in reports.keys():
