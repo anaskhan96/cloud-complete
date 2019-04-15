@@ -26,7 +26,7 @@ orch_reports_collection = db["orch_reports"]
 
 app = Flask(__name__)
 app.config['BASIC_AUTH_USERNAME'] = 'ccbd-evaluator'
-app.config['BASIC_AUTH_PASSWORD'] = 'ccbdevalsecret'
+app.config['BASIC_AUTH_PASSWORD'] = 'ccbdevalnotsosecret'
 basic_auth = BasicAuth(app)
 
 @app.route('/ccbd', methods=['GET'])
