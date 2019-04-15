@@ -192,7 +192,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
             let i = 0;
             document.getElementById('genorchbtn').disabled = true;
             let center = document.getElementById('orchCentr');
-            let p = document.getElementById('p');
+            let p = document.createElement('p');
             p.innerHTML = "Once the reports are generated, the page will contain new links. Please stay patient, orchestration reports specially take a few minutes.";
             center.appendChild(p);
             let div = document.createElement('div');

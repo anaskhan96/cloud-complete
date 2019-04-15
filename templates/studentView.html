@@ -264,9 +264,9 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
             }
 
             let data = new FormData();
-            data.append('actsPrivateKey', actsPkeyInput.files[0]);
+            data.append('actsPrivateKey', orchActsPkeyInput.files[0]);
             let center = document.getElementById('orchCentr');
-            let p = document.getElementById('p');
+            let p = document.createElement('p');
             p.innerHTML = "Once the reports are generated, the page will contain new links. Please stay patient, orchestration reports specially take a few minutes.";
             center.appendChild(p);
             let div = document.createElement('div');
@@ -327,7 +327,8 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
         <p>Enter your `selfielessacts` IP: </p><input type="text" id="orchSelfieLessActsIpInput" /><br>
         <p>Enter your `acts` IP: </p><input type="text" id="orchActsIpInput" /><br>
         <p>Enter your `acts` username: </p><input type="text" id="orchActsUsernameInput" /><br>
-        <p>Upload your `acts` private key file: </p><input type="file" id="orchActsPkeyInput" name="privateKey" /><br>
+        <p>Upload your `acts` private key file: </p><input type="file" id="orchActsPkeyInput"
+            name="privateKey" /><br><br>
         <center id="orchCentr"><button id="genorchbtn" onclick="generateOrchReport();">Generate Orchestration
                 Report</button></center>
     </div>
