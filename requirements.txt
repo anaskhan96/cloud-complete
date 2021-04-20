@@ -6,4 +6,4 @@ pymongo==3.6.1
 Werkzeug==0.14.1
 paramiko==1.17.0
 requests==2.19.1
-PyYAML==5.1
+PyYAML==5.4
