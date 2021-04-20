@@ -5,5 +5,5 @@ Jinja2==2.11.3
 pymongo==3.6.1
 Werkzeug==0.14.1
 paramiko==1.17.0
-requests==2.19.1
+requests==2.20.0
 PyYAML==5.4
