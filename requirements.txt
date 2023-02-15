@@ -3,7 +3,7 @@ bottle==0.12.19
 Flask==1.0.2
 Jinja2==2.11.3
 pymongo==3.6.1
-Werkzeug==0.15.3
+Werkzeug==2.2.3
 paramiko==2.10.1
 requests==2.20.0
 PyYAML==5.4
